@@ -1,0 +1,6 @@
+.controls {
+  display: flex; gap: 12px; align-items: center; justify-content: center;
+  margin-top: 12px; font-size: 13px;
+}
+button { font: inherit; padding: 6px 9px; }
+#status { min-height: 1.2em; margin: 8px 0 0; font-size: 12px; }

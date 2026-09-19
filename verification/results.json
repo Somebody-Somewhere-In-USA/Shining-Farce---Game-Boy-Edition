@@ -1,0 +1,66 @@
+{
+  "ruleChecks": 778,
+  "ruleFailures": [],
+  "externalAssetsChecked": 22,
+  "paletteValidation": {
+    "shippingPngsChecked": 31,
+    "opaquePixelsChecked": 20284,
+    "runtimeSourceFilesChecked": 162,
+    "authorizedColors": [
+      "#9BBC0F",
+      "#8BAC0F",
+      "#306230",
+      "#0F380F"
+    ],
+    "colorsObserved": [
+      "#0F380F",
+      "#306230",
+      "#8BAC0F",
+      "#9BBC0F"
+    ],
+    "forbiddenColors": 0,
+    "partialAlphaPixels": 0
+  },
+  "developerPresentation": "passed: Terminal, contextual Dev Menu, keyboard conflict reassignment, controller mappings, field focus/cancel, terrain copy/paint, resize, locations, shops, recruitment, connections, Ocean map creation, variants, authored deployment, special unit, validation, normal renderer preview, storage failure and shipping instructions",
+  "assetAndFramebufferPalette": "exactly four authorized shades; no partial alpha",
+  "logicalSize": [
+    480,
+    360
+  ],
+  "battleFoundationPresentation": "passed: 30x30 scrolling map, CT portraits, command menu, explicit End Turn, queued spells, adjacent/ranged/friendly/self/Prayer scenes, palette fades, victory return",
+  "characterPresentation": "passed: unit status, stable recruit stats preview/purchase, seven race previews, debug level-up; pure preview reads",
+  "classPresentation": "passed: prerequisites, class changing, CP debug grant, final ability prices and normal purchase, explicit debug learning, five-part loadout, equipment permissions, Skills ownership and bow availability, Archer/Alchemist pages, Quick Items plus Attack, Trade inventory preview and Major Action inspection",
+  "resizeCases": [
+    [
+      1000,
+      800,
+      2
+    ],
+    [
+      960,
+      720,
+      2
+    ],
+    [
+      959,
+      719,
+      1
+    ],
+    [
+      480,
+      360,
+      1
+    ],
+    [
+      200,
+      160,
+      1
+    ]
+  ],
+  "strategicTileSize": 16,
+  "nativeStrategicArt": "16px assets with detail beyond doubled 8px pixels",
+  "inputAndMenus": "passed: spatial cursor, stack cycling, stationing, roster reorder, shops, recruitment, inventory, equipment delivery, wagon interception, End Day, two sequential battles, tactical movement/collision",
+  "spellPresentation": "passed: family/level/method/target flow, modified MP/damage, Portal forced and voluntary transfer, both allegiance PNGs, selected pair highlight, visible Dying counter, animation -> map -> victory banner; player Lv1 counter selection, timed Fly, required diagonal escape, AWOL removal and campaign return message",
+  "browserFileLaunch": "NOT VERIFIED: Prompt 6 direct file:// attempt was rejected by browser URL policy; no workaround used",
+  "screenshots": "Offline Canvas2D renders, not browser screenshots"
+}

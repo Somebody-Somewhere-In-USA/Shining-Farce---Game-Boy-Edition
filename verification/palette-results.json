@@ -1,0 +1,19 @@
+{
+  "shippingPngsChecked": 31,
+  "opaquePixelsChecked": 20284,
+  "runtimeSourceFilesChecked": 162,
+  "authorizedColors": [
+    "#9BBC0F",
+    "#8BAC0F",
+    "#306230",
+    "#0F380F"
+  ],
+  "colorsObserved": [
+    "#0F380F",
+    "#306230",
+    "#8BAC0F",
+    "#9BBC0F"
+  ],
+  "forbiddenColors": 0,
+  "partialAlphaPixels": 0
+}

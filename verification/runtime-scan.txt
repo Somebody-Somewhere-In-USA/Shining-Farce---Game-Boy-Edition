@@ -1,0 +1,3 @@
+Prompt 6B runtime dependency scan
+Files scanned: 143
+PASS: no fetch, XMLHttpRequest, module imports/exports, module scripts, or remote URLs. Classic local scripts and PNG assets retained.

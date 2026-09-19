@@ -1,0 +1,1 @@
+passed: Terminal, contextual Dev Menu, keyboard conflict reassignment, controller mappings, field focus/cancel, terrain copy/paint, resize, locations, shops, recruitment, connections, Ocean map creation, variants, authored deployment, special unit, validation, normal renderer preview, storage failure and shipping instructions

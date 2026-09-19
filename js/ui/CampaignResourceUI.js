@@ -1,0 +1,59 @@
+(function (G) {
+  "use strict";
+  const U=G.campaign.UnitManagementSystem,I=G.campaign.InventorySystem,E=G.campaign.EconomySystem;
+  class CampaignResourceUI {
+    constructor(host){this.h=host;this.c=host.campaign;this.classes=new G.ui.ClassManagementUI(host);}
+    list(title,items){this.h.showList(title,items);}
+    page(title,lines){this.h.showPage(title,lines);}
+    location(id){return this.c.definitions.locations[id]?.name||"UNKNOWN";}
+    place(item){const s=this.c.state;return item.state==="IN_TRANSIT"?"TRANSIT / "+this.location(I.location(s,item)):item.place.type==="UNIT"?item.state+" / "+s.units[item.place.id].name:this.location(item.place.id);}
+    details(def){return [def.category,...Object.entries(def.modifiers).map(([k,v])=>k.toUpperCase()+" +"+v),...(def.allowedClasses?["FOR "+def.allowedClasses.join(" / ").toUpperCase()]:[]),...(def.effect?["EFFECT: "+def.effect.kind+" (TACTICAL DEFERRED)"]:[])];}
+    done(title,lines){this.h.stack=[];this.h.mode="map";this.page(title,lines);}
+    economy(){const s=this.c.state;this.page("ECONOMY",["TREASURY: "+s.treasuries.PLAYER+" G","EXPECTED DAILY INCOME: "+E.expected(this.c.definitions,s,"PLAYER")+" G",...Object.keys(s.locations).filter(id=>s.locations[id].controller==="PLAYER").map(id=>this.location(id)+" +"+E.income(this.c.definitions,s,id)+" G"),"INCOME COLLECTED DURING WORLD UPDATE."]);}
+    shop(locationId){const s=this.c.state,defs=E.available(this.c.definitions,s,locationId),categories=[...new Set(defs.map(i=>i.category))];
+      this.list("SHOP / "+this.location(locationId),categories.map(category=>({label:category,run:()=>this.list(category+" / "+this.c.state.treasuries.PLAYER+" G",defs.filter(i=>i.category===category).map(def=>({label:def.name+" "+E.price(def)+" G",run:()=>this.h.showPopup("BUY "+def.name+"?",[
+        {label:E.price(def)+"G: "+this.c.state.treasuries.PLAYER+" > "+(this.c.state.treasuries.PLAYER-E.price(def)),run:()=>{this.c.purchase(locationId,def.id);this.done("PURCHASED",[def.name,"AT "+this.location(locationId),"G: "+this.c.state.treasuries.PLAYER]);}},
+        {label:"ITEM DETAILS",run:()=>this.page(def.name,this.details(def))},{label:"CANCEL",run:()=>this.h.back()}
+      ])}))) })));}
+    recruitment(locationId){const s=this.c.state,pool=s.recruitPools[locationId];this.list("RECRUITS / NEW IN "+(s.recruitment.nextRefreshDay-s.day)+"D",pool.map(c=>{const type=G.data.UNIT_TYPES[c.typeId];return{label:type.name+" LV"+c.characterLevel+" "+G.core.DeveloperRuntime.costG(c.costG)+"G",run:()=>this.h.showPopup(type.name+" LV"+c.characterLevel,[
+      {label:"RECRUIT "+G.core.DeveloperRuntime.costG(c.costG)+" G",run:()=>{const id=this.c.recruit(locationId,c.id);this.done("RECRUITED",[this.c.state.units[id].name,"AT "+this.location(locationId),"UNASSIGNED / USE UNITS MENU"]);}},
+      {label:"RACE / STATS",run:()=>this.page(type.name,[...G.ui.CharacterStatView.lines(c,G.campaign.CharacterStatsSystem.deriveStats(c)),"COST "+G.core.DeveloperRuntime.costG(c.costG)+" G","YOU HAVE "+this.c.state.treasuries.PLAYER+" G"])}
+    ])};}));}
+    inventory(){const s=this.c.state;this.list("INVENTORY / ALL OWNED COPIES",I.aggregate(s).map(group=>({label:G.data.ITEMS[group.definitionId].name+" X"+group.count,run:()=>this.list(G.data.ITEMS[group.definitionId].name+" / "+group.count+" TOTAL",group.copies.map((id,index)=>({label:"COPY "+(index+1)+" / "+this.place(this.c.state.itemInstances[id]),run:()=>{const item=this.c.state.itemInstances[id];this.page(G.data.ITEMS[item.definitionId].name,["STATE: "+item.state,"PLACE: "+this.place(item),"ASSIGNED: "+(this.c.state.units[item.assignedUnitId]?.name||"NONE"),...this.details(G.data.ITEMS[item.definitionId])]);}})))})));}
+    manage(squadId){const q=this.c.state.squads[squadId];this.list("MANAGE / "+q.name,[{label:"ROSTER",run:()=>this.roster(squadId)},{label:"UNITS / EQUIPMENT",run:()=>this.units(q.unitIds)},{label:"ADD LOCAL UNIT",run:()=>this.list("LOCAL UNASSIGNED UNITS",Object.values(this.c.state.units).filter(u=>u.faction==="PLAYER"&&u.status==="ACTIVE"&&!U.squadFor(this.c.state,u.id)&&u.unassignedLocationId===q.currentLocationId&&!this.c.state.travelerOrders["unit_"+u.id]).map(u=>({label:u.name,run:()=>{this.c.transferUnit(u.id,squadId);this.done("UNIT ADDED",[u.name,q.name]);}})))},{label:"DISMISS SQUAD",run:()=>this.h.showPopup("DISMISS "+q.name+"?",[{label:"DISMISS / KEEP UNITS",run:()=>{this.c.dismissSquad(squadId);this.done("SQUAD DISMISSED",["UNITS REMAIN AT "+this.location(q.currentLocationId)]);}},{label:"CANCEL",run:()=>this.h.back()}])}]);}
+    roster(squadId){const items=()=>this.c.state.squads[squadId].unitIds.map((id,i)=>({label:(i+1)+" "+this.c.state.units[id].name,run:()=>this.list("REORDER / "+this.c.state.units[id].name,[...[["UP",-1],["DOWN",1],["TO TOP","TOP"]].map(([label,delta])=>({label,run:()=>{this.c.reorderRoster(squadId,id,delta);this.h.back();this.h.list=new G.ui.SelectableList(items());}})),{label:"UNIT / EQUIPMENT",run:()=>this.unit(id)}])}));this.list("ORDERED ROSTER / SLOT 1 IS SPRITE",items());}
+    units(ids=null){const s=this.c.state;this.list("PLAYER UNITS",(ids?ids.map(id=>s.units[id]):Object.values(s.units).filter(u=>u.faction==="PLAYER")).map(u=>({label:u.name+" / "+(u.status==="ACTIVE"?this.location(U.location(s,u.id)):u.status),run:()=>this.unit(u.id)})));}
+    unit(id){const s=this.c.state,u=s.units[id],q=U.squadFor(s,id),planning=s.phase==="PLANNING"&&u.status==="ACTIVE";const items=[{label:"STATUS / "+this.location(U.location(s,id)),run:()=>this.page(u.name,[...G.ui.CharacterStatView.lines(u,I.stats(s,id)),u.status,"SQUAD: "+(q?.name||"UNASSIGNED")])},{label:"EQUIPMENT / PERSONAL",run:()=>this.equipment(id)}];
+      if(planning){items.push({label:"CLASSES / ABILITIES",run:()=>this.classes.unit(id)});if(!s.travelerOrders["unit_"+id])items.push({label:"JOIN / TRANSFER TO SQUAD",run:()=>this.list("LOCAL PLAYER SQUADS",Object.values(s.squads).filter(other=>other.faction==="PLAYER"&&other.id!==q?.id&&other.currentLocationId===U.location(s,id)&&other.unitIds.length<12).map(other=>({label:other.name,run:()=>{this.c.transferUnit(id,other.id);this.done("UNIT TRANSFERRED",[u.name,other.name]);}})))});
+        if(q)items.push({label:"LEAVE SQUAD",run:()=>{this.c.removeUnit(id);this.done("UNIT UNASSIGNED",[u.name,this.location(q.currentLocationId)]);}});
+        else {items.push({label:"TRAVEL TO LOCATION",run:()=>this.list("ONE EDGE PER DAY",Object.values(this.c.definitions.locations).filter(l=>l.id!==u.unassignedLocationId).map(l=>({label:l.name,run:()=>{this.c.queueLoneUnit(id,l.id);this.done("TRAVEL QUEUED",[u.name,"TO "+l.name]);}})))});if(s.travelerOrders["unit_"+id])items.push({label:"CANCEL TRAVEL",run:()=>{this.c.cancelLoneUnit(id);this.done("TRAVEL CANCELLED",[u.name,this.location(u.unassignedLocationId)]);}}); else items.push({label:"FORM NEW SQUAD HERE",run:()=>{let n=1;while(this.c.state.squads["company"+n])n++;this.c.createSquad({id:"company"+n,name:"COMPANY "+n,faction:"PLAYER",currentLocationId:u.unassignedLocationId,unitIds:[id]});this.done("SQUAD CREATED",["COMPANY "+n,u.name]);}});}
+      }this.list(u.name,items);
+    }
+    equipment(unitId){const s=this.c.state; if(s.phase!=="PLANNING" || s.units[unitId].status!=="ACTIVE") { this.page("EQUIPMENT",Object.values(I.equipment(s,unitId)).map(id=>G.data.ITEMS[s.itemInstances[id].definitionId].name));return; } const current=I.equipment(s,unitId),pending=Object.values(s.itemInstances).filter(i=>i.assignedUnitId===unitId);this.list("EQUIPMENT / "+s.units[unitId].name,[
+      ...["weapon","offHand","armor","accessory"].map(slot=>({label:slot.toUpperCase()+": "+(G.data.ITEMS[s.itemInstances[current[slot]]?.definitionId]?.name||"NONE"),run:()=>this.alternatives(unitId,slot)})),
+      {label:"PERSONAL / CONSUMABLES",run:()=>this.alternatives(unitId,null)},
+      {label:"CURRENT ITEMS / REMOVE",run:()=>this.list("UNIT POSSESSIONS",Object.values(s.itemInstances).filter(i=>i.place.type==="UNIT"&&i.place.id===unitId).map(i=>({label:G.data.ITEMS[i.definitionId].name,run:()=>{this.c.releaseItem(i.id);this.done("ITEM REMOVED",["STORED AT "+this.location(U.location(s,unitId))]);}})))},
+      {label:"DELIVERIES: "+pending.length,run:()=>this.page("PENDING EQUIPMENT",pending.length?pending.flatMap(i=>[G.data.ITEMS[i.definitionId].name,this.place(i),"NOT ACTIVE UNTIL DELIVERED"]):["NONE"])}
+    ]);}
+    alternatives(unitId,slot){const s=this.c.state;this.list(slot?slot.toUpperCase()+" / OWNED ALTERNATIVES":"PERSONAL ITEMS",Object.values(s.itemInstances).filter(i=>i.state==="AVAILABLE"&&I.eligible(s,i,unitId)&&G.data.ITEMS[i.definitionId].equipmentSlot===slot).map(i=>{const def=G.data.ITEMS[i.definitionId],remote=I.location(s,i)!==U.location(s,unitId);return{label:def.name+" / "+this.place(i),run:()=>this.h.showPopup(remote?"DELIVERY REQUIRED":"EQUIP AT SAME LOCATION",[
+      {label:remote?"REQUEST DELIVERY":"EQUIP NOW",run:()=>{this.c.assignItem(i.id,unitId);this.done(remote?"DELIVERY REQUESTED":"ITEM EQUIPPED",[def.name,"FOR "+s.units[unitId].name,...(remote?["OLD EQUIPMENT REMAINS ACTIVE.","END DAY MOVES DELIVERY ONE EDGE."]:[])]);}},
+      {label:"ITEM STATS / LOCATION",run:()=>this.page(def.name,[this.place(i),...this.details(def)])},{label:"CANCEL",run:()=>this.h.back()}
+    ])};}));}
+    wagon(id){const s=this.c.state,w=s.shipments[id],o=s.travelerOrders["wagon_"+id];this.page("SUPPLY WAGON",["AT "+this.location(w.currentLocationId),"TO "+this.location(w.destinationLocationId),"FOR "+s.units[w.targetUnitId].name,o?o.plannedRouteIds.length+" EDGES REMAIN":"HOLDING / WAITING FOR SAFE ROUTE",...w.cargoIds.map(id=>G.data.ITEMS[s.itemInstances[id].definitionId].name),"INDEPENDENT / NO SQUAD ESCORT", "ZEON INTERCEPTION DESTROYS CARGO"]);}
+    shipments(){this.list("SUPPLY SHIPMENTS",Object.values(this.c.state.shipments).map(w=>({label:"TO "+this.location(w.destinationLocationId)+" / "+w.cargoIds.length+" ITEMS",run:()=>this.wagon(w.id)})));}
+    racePreviews(){this.list("RACES / PROVISIONAL STATS",Object.values(G.data.RACES).map(r=>({label:r.name,run:()=>{
+      const unit=G.campaign.CharacterGrowthSystem.simulateRecruitGrowth({raceId:r.id,currentClassId:"preview",characterLevel:1,seed:12345});
+      this.page(r.name,[...G.ui.CharacterStatView.lines(unit,G.campaign.CharacterStatsSystem.deriveStats(unit)),"LEVEL 1 / FIXED PREVIEW SEED","NO CLASS BONUSES",...(r.equipmentRestrictions.forbiddenSlots.length?["CANNOT EQUIP: "+r.equipmentRestrictions.forbiddenSlots.join(" / ").toUpperCase()]:[])]);
+    }})));}
+    debugLevelUp(){this.list("DEBUG / ONE GROWTH EVENT",Object.values(this.c.state.units).filter(u=>u.status==="ACTIVE"&&u.characterLevel<G.config.CHARACTER_STATS.levelCap).map(u=>({label:u.name+" LV"+u.characterLevel,run:()=>{
+      this.c.advanceCharacterLevel(u.id);const next=this.c.state.units[u.id];this.done("CHARACTER LEVEL UP",G.ui.CharacterStatView.lines(next,I.stats(this.c.state,u.id)));
+    }})));}
+    debug(){const s=this.c.state;this.page("RESOURCE DEBUG",["PLAYER G "+s.treasuries.PLAYER,"ZEON G "+s.treasuries.ZEON,"NEXT REFRESH "+s.recruitment.nextRefreshDay,"SEED "+s.recruitment.seed,
+      ...Object.entries(this.c.definitions.locations).map(([id,l])=>id+" INCOME "+l.economy.dailyIncomeG+" SHOPS "+JSON.stringify(l.economy.shops)),
+      ...Object.values(s.squads).map(q=>q.id+" "+q.unitIds.join(",")+" SPRITE "+U.sprite(s,q)),
+      ...Object.values(s.units).map(u=>u.id+" "+u.status+" @ "+U.location(s,u.id)),
+      ...Object.values(s.itemInstances).map(i=>i.id+" "+i.definitionId+" "+JSON.stringify(i.place)+" "+i.state+" ASSIGNED "+i.assignedUnitId),
+      ...Object.values(s.shipments).map(w=>JSON.stringify(w)),...Object.values(s.travelerOrders).map(o=>JSON.stringify(o)),...Object.entries(s.recruitPools).map(([id,p])=>id+" "+JSON.stringify(p))]);}
+  }
+  G.ui.CampaignResourceUI=CampaignResourceUI;
+}(window.GBTRPG));

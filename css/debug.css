@@ -1,0 +1,2 @@
+/* Reserved for debug overlays and developer tooling. */
+.debug-hidden { display: none !important; }

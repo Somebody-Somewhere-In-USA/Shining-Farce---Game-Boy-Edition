@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shining Farce — Campaign Foundation</title>
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+  <canvas id="game" width="480" height="360" tabindex="0" aria-label="Shining Farce. Arrows move the map cursor, Enter selects, Q cycles squads, Escape goes back, M opens the menu."></canvas>
+  <p id="status" class="accessible-status" role="status">Loading Shining Farce.</p>
+  <noscript>Enable JavaScript to play Shining Farce.</noscript>
+  <!-- Classic scripts, ordered by dependency. No fetch, modules, server or build. -->
+  <!-- Namespace and configuration -->
+  <script src="js/bootstrap.js"></script>
+  <script src="js/config/gameConfig.js"></script>
+  <script src="js/config/battleConfig.js"></script>
+  <script src="js/config/graphicsConfig.js"></script>
+  <script src="js/config/palette.js"></script>
+  <script src="js/config/campaignConfig.js"></script>
+  <script src="js/config/characterStatsConfig.js"></script>
+  <script src="js/config/classConfig.js"></script>
+  <script src="js/config/spellConfig.js"></script>
+  <!-- External definitions -->
+  <script src="js/data/assets.js"></script>
+  <script src="js/data/maps.js"></script>
+  <script src="js/data/terrain.js"></script>
+  <script src="js/data/characters.js"></script>
+  <script src="js/data/enemies.js"></script>
+  <script src="js/data/weapons.js"></script>
+  <script src="js/data/spells.js"></script>
+  <script src="js/data/items.js"></script>
+  <script src="js/data/animations.js"></script>
+  <script src="js/data/world.js"></script>
+  <script src="js/data/races.js"></script>
+  <script src="js/data/campaignResources.js"></script>
+  <script src="js/data/equipmentFamilies.js"></script>
+  <script src="js/data/classes.js"></script>
+  <script src="js/data/abilities.js"></script>
+  <script src="js/data/spellClasses.js"></script>
+  <script src="js/data/worldVisuals.js"></script>
+  <script src="js/data/demoCampaign.js"></script>
+  <!-- Shared runtime -->
+  <script src="js/utils/grid.js"></script>
+  <script src="js/utils/math.js"></script>
+  <script src="js/utils/validation.js"></script>
+  <script src="js/core/Assets.js"></script>
+  <script src="js/core/LocalStore.js"></script>
+  <script src="js/core/DeveloperRuntime.js"></script>
+  <script src="js/core/Input.js"></script>
+  <script src="js/core/EventBus.js"></script>
+  <script src="js/core/GameState.js"></script>
+  <script src="js/core/DeterministicRandom.js"></script>
+  <!-- Campaign rules, independent of rendering and DOM -->
+  <script src="js/campaign/Validation.js"></script>
+  <script src="js/campaign/ClassEntryGrantSystem.js"></script>
+  <script src="js/campaign/AbilityCostSystem.js"></script>
+  <script src="js/systems/ExecutionReceiptSystem.js"></script>
+  <script src="js/campaign/ClassProgressionSystem.js"></script>
+  <script src="js/campaign/AbilityLoadoutSystem.js"></script>
+  <script src="js/campaign/AbilityLearningSystem.js"></script>
+  <script src="js/campaign/AbilityModifierSystem.js"></script>
+  <script src="js/campaign/ClassManagementSystem.js"></script>
+  <script src="js/campaign/ClassMigration.js"></script>
+  <script src="js/campaign/ClassGrowthProvider.js"></script>
+  <script src="js/campaign/CharacterGrowthSystem.js"></script>
+  <script src="js/campaign/CharacterStatsSystem.js"></script>
+  <script src="js/campaign/CharacterValidation.js"></script>
+  <script src="js/campaign/CharacterMigration.js"></script>
+  <script src="js/campaign/EquipmentEligibility.js"></script>
+  <script src="js/campaign/BattleStatAdapter.js"></script>
+  <script src="js/campaign/StationingSystem.js"></script>
+  <script src="js/campaign/SquadSystem.js"></script>
+  <script src="js/campaign/CampaignState.js"></script>
+  <script src="js/campaign/PoliticalControlSystem.js"></script>
+  <script src="js/campaign/CampaignTurnSystem.js"></script>
+  <script src="js/campaign/WorldPathfindingSystem.js"></script>
+  <script src="js/campaign/BattleLocationSystem.js"></script>
+  <script src="js/campaign/TravelerPath.js"></script>
+  <script src="js/campaign/StrategicOrderSystem.js"></script>
+  <script src="js/campaign/ZeonOrderProvider.js"></script>
+  <script src="js/campaign/MovementIntentSystem.js"></script>
+  <script src="js/campaign/MovementConflictSystem.js"></script>
+  <script src="js/campaign/BattleCasualtySystem.js"></script>
+  <script src="js/campaign/AwolSystem.js"></script>
+  <script src="js/campaign/BattleBoundary.js"></script>
+  <script src="js/campaign/WorldUpdateSystem.js"></script>
+  <script src="js/campaign/EndDayResolutionSystem.js"></script>
+  <script src="js/campaign/ResolutionValidation.js"></script>
+  <script src="js/campaign/UnitManagementSystem.js"></script>
+  <script src="js/campaign/EconomySystem.js"></script>
+  <script src="js/campaign/RecruitmentSystem.js"></script>
+  <script src="js/campaign/InventorySystem.js"></script>
+  <script src="js/campaign/TravelerSystem.js"></script>
+  <script src="js/campaign/ResourceSystem.js"></script>
+  <script src="js/campaign/Campaign.js"></script>
+  <script src="js/data/developmentScenarios.js"></script>
+  <script src="js/data/spellLabScenario.js"></script>
+  <!-- Preserved tactical groundwork: 16px tiles and isolated state -->
+  <script src="js/entities/Unit.js"></script>
+  <script src="js/entities/Character.js"></script>
+  <script src="js/entities/Enemy.js"></script>
+  <script src="js/systems/TerrainSystem.js"></script>
+  <script src="js/systems/MovementSystem.js"></script>
+  <script src="js/systems/PathfindingSystem.js"></script>
+  <script src="js/systems/TurnSystem.js"></script>
+  <script src="js/systems/AbilityRequirementSystem.js"></script>
+  <script src="js/systems/SpellMenuSystem.js"></script>
+  <script src="js/systems/ActionCommandSystem.js"></script>
+  <script src="js/systems/DoubleAttackSystem.js"></script>
+  <script src="js/systems/TacticalEquipmentSystem.js"></script>
+  <script src="js/systems/StealSystem.js"></script>
+  <script src="js/systems/AbilityEffectHooks.js"></script>
+  <script src="js/systems/TacticalMovementRules.js"></script>
+  <script src="js/systems/FactionSystem.js"></script>
+  <script src="js/systems/CombatSystem.js"></script>
+  <script src="js/systems/TargetingSystem.js"></script>
+  <script src="js/systems/BattleStatusSystem.js"></script>
+  <script src="js/systems/BattleTerrainSystem.js"></script>
+  <script src="js/systems/DeploymentSystem.js"></script>
+  <script src="js/systems/BattleInitializationSystem.js"></script>
+  <script src="js/data/battleFoundationFixture.js"></script>
+  <script src="js/systems/CTSystem.js"></script>
+  <script src="js/systems/CombatEventQueue.js"></script>
+  <script src="js/systems/BattleSceneSequence.js"></script>
+  <script src="js/systems/FlyingSystem.js"></script>
+  <script src="js/systems/PortalSystem.js"></script>
+  <script src="js/systems/MagicSystem.js"></script>
+  <script src="js/systems/BattleActionSystem.js"></script>
+  <script src="js/systems/ItemSystem.js"></script>
+  <script src="js/systems/TradeSystem.js"></script>
+  <script src="js/systems/HiddenItemSystem.js"></script>
+  <script src="js/systems/ExperienceSystem.js"></script>
+  <script src="js/systems/AISystem.js"></script>
+  <!-- Presentation -->
+  <script src="js/rendering/Renderer.js"></script>
+  <script src="js/rendering/MapRenderer.js"></script>
+  <script src="js/rendering/UnitRenderer.js"></script>
+  <script src="js/rendering/BattleRenderer.js"></script>
+  <script src="js/rendering/BattleMapRenderer.js"></script>
+  <script src="js/rendering/BattleSceneRenderer.js"></script>
+  <script src="js/rendering/AnimationPlayer.js"></script>
+  <script src="js/rendering/Camera.js"></script>
+  <script src="js/rendering/WorldCamera.js"></script>
+  <script src="js/rendering/PixelTextRenderer.js"></script>
+  <script src="js/rendering/CampaignUIRenderer.js"></script>
+  <script src="js/rendering/WorldMapRenderer.js"></script>
+  <script src="js/ui/SelectableList.js"></script>
+  <script src="js/ui/MapPresentation.js"></script>
+  <script src="js/states/ExplorationState.js"></script>
+  <script src="js/states/BattleState.js"></script>
+  <script src="js/systems/BattleController.js"></script>
+  <script src="js/states/CombatCutInState.js"></script>
+  <script src="js/states/SpellLabState.js"></script>
+  <script src="js/states/BattleMapState.js"></script>
+  <script src="js/states/AnimationTestState.js"></script>
+  <script src="js/ui/CharacterStatView.js"></script>
+  <script src="js/ui/ClassManagementUI.js"></script>
+  <script src="js/ui/CampaignResourceUI.js"></script>
+  <script src="js/states/CampaignMapState.js"></script>
+  <script src="js/states/EndDayState.js"></script>
+  <!-- Preserved, currently unused tactical interfaces -->
+  <script src="js/ui/CommandMenu.js"></script>
+  <script src="js/ui/BattleHUD.js"></script>
+  <script src="js/ui/StatusPanel.js"></script>
+  <script src="js/ui/AnimationTestUI.js"></script>
+  <script src="js/editor/LocationModel.js"></script>
+  <script src="js/editor/MapAuthoring.js"></script>
+  <script src="js/editor/BattleMapAuthoring.js"></script>
+  <script src="js/editor/EditorDocument.js"></script>
+  <script src="js/editor/AuthoredContent.js"></script>
+  <script src="js/editor/PropertyScreen.js"></script>
+  <script src="js/editor/EditorFiles.js"></script>
+  <script src="js/editor/DeveloperShell.js"></script>
+  <script src="js/editor/MapEditorState.js"></script>
+  <script src="js/data/authored-content.js"></script>
+  <script src="js/debug/FoundationTests.js"></script>
+  <script src="js/debug/StrategicMovementTests.js"></script>
+  <script src="js/debug/MapPresentationTests.js"></script>
+  <script src="js/debug/ResourceTests.js"></script>
+  <script src="js/debug/CharacterStatsTests.js"></script>
+  <script src="js/debug/ClassFoundationTests.js"></script>
+  <script src="js/debug/ProgressionConsolidationTests.js"></script>
+  <script src="js/debug/SpellFrameworkTests.js"></script>
+  <script src="js/debug/SpellCorrectionsTests.js"></script>
+  <script src="js/debug/RouteMidpointTests.js"></script>
+  <script src="js/debug/BattleFoundationTests.js"></script>
+  <script src="js/debug/DeveloperToolsTests.js"></script>
+  <script src="js/debug/DeploymentOceanTests.js"></script>
+  <!-- Composition root -->
+  <script src="js/core/Game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+html, body { width: 100%; min-height: 100%; margin: 0; }
+body { min-height: 100vh; display: grid; place-items: center; background: var(--clear-color); }
+#game { display: block; image-rendering: pixelated; outline: none; }
+/* Only an accessibility live region. All visible game text is in the framebuffer. */
+.accessible-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
