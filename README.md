@@ -1,5 +1,13 @@
 # Shining Farce — Developer Tools and Map Authoring
 
+## Documentation authority and future development
+
+The [Canonical Design Specification](CANONICAL-DESIGN-SPECIFICATION.md) consolidates established design through Prompt #10 and is prepared for human review/acceptance. Once accepted, it is the authority for design intent. The Git repository is the authority for implemented behavior. The [Recovery Ledger](docs/SHINING-FARCE-CANONICAL-RECOVERY-LEDGER.md) preserves provenance/history/recovery; dated handoffs and implementation reports remain historical.
+
+This README and [ARCHITECTURE](docs/ARCHITECTURE.md) describe current implementation and guide development; they are not independent design authority. No clearly current Codex Development Handoff exists: the latest named handoff is the historical After Prompt #7 DOCX. No new handoff file was created.
+
+Future sessions should read the canonical specification, inspect its §31 mismatch register against current code, and consult the ledger for provenance when needed. Do not invent unresolved design or use fixture values as final balance. Future accepted decisions amend the specification; identify the accompanying implementation work separately. The implementation descriptions below can lag design: for example the current Mage entry grant, reaction scheduling and attack formulas differ. Prompt #10 changes documentation only. See the [documentation report](docs/PROMPT10-DOCUMENTATION-REPORT.md) for coverage, validation and known gaps.
+
 Copy or extract this **whole folder**, then double-click **index.html** in a modern desktop browser. No server, installation, npm, Python, terminal or build is needed to play. Campaign runtime lives in memory; reloading starts a fresh campaign from the shipped definitions. Campaign save/load UI remains deferred. Control mappings and explicitly saved editor drafts persist separately in browser storage; JSON backup and import/export are available.
 
 Direct `file://` execution remains the runtime target. Classic scripts register on `window.GBTRPG`; definitions are external JavaScript files and local PNGs load through `Image`. There are no module imports, fetch/XHR calls, remote resources or runtime dependencies.
