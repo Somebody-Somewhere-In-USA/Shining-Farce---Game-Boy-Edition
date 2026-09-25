@@ -1,0 +1,10 @@
+SHINING FARCE / SHIPPING MAP PACKAGE
+1. Back up your project and close the game.
+2. Extract this package into the project root (beside index.html), replacing matching files.
+3. In index.html replace only the BEGIN/END AUTHORED MAP ASSETS block with map-scripts.html's block.
+4. Reopen index.html. Distribute the entire project folder.
+Old unlisted Battle Map files are ignored. Do not remove the registry or legacy bootstrap script tags.
+The package disables legacy monolithic content to avoid mixing two shipping sources.
+editor-backup.json is a portable editor draft; importing it does not install shipping files.
+The browser only downloads this package. It does not modify project files or campaign saves.
+Individual replacements keep their generated filename and ID; adding/removing maps requires exporting the Campaign Map index and updating the script block.

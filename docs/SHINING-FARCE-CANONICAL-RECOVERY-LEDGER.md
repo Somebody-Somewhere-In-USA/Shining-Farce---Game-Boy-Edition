@@ -944,3 +944,15 @@ Navigation aid for human review only. HIGH = explicit decision with consistent l
 | Workbook identity/provenance | v4_with_Mage is renamed v4 for recovery; missing original transcripts are documentary limits, not gameplay ambiguity | HIGH adjudicated identity/status | P9B §4; RECOVERY-002 | Files untouched; no separate missing workbook inferred |
 
 End of recovery ledger. P9B completes this recovery pass: all15 recovery records closed, no active NEEDS RECOVERY items. Established design and intentionally unfinished TBD/NEEDS DESIGN remain separate. No gameplay implementation or final canonical specification was created.
+
+
+## Implementation addendum — 2026-09-24 authoring persistence
+
+This implementation-only addendum supersedes the physical shipping workflow described historically in **R32-06** and the Prompt #8 report. Those entries remain provenance of the original monolithic architecture; no recovered design adjudication or TBD is changed. See [Authoring Persistence Implementation](AUTHORING-PERSISTENCE-IMPLEMENTATION.md).
+
+Current shipping assets are a Campaign Map script at `js/data/maps/campaign/campaign.js` plus individual Battle Map scripts under `js/data/maps/battle/`, explicitly listed in the authored-assets block of `index.html` and registered through `AuthoredRegistry`. The editor exports a readiness-gated ZIP with installation instructions/static script snippet, or individual replacements. Browser-local saves remain editor-only. Whole v1 JSON backups remain compatible; version-1 partial JSON wrappers support Campaign Map/dependencies and individual/collection Battle Map import/export with explicit collision replacement. Legacy `AUTHORED_CONTENT` input still works alone; installing the generated split package disables that old assignment. Editor/control versions remain 1 and campaign schema remains 8; no authored-world save migration was introduced. Classic offline loading, draft/readiness separation, stable identities, location references and all gameplay rules remain unchanged. The demo remains the default until shipping assets are installed; no production Battle Map catalog was added.
+
+
+## Implementation addendum — Windows shipping correction, 2026-09-24
+
+The preceding split-JavaScript implementation remains historical provenance. User Windows testing exposed blocked downloaded `.js` files; read-only inspection found Restricted-zone (`ZoneId=4`) marks on the original ZIP and extracted data/instructions. The [Windows Shipping Correction](WINDOWS-SHIPPING-CORRECTION.md) supersedes its physical deployment procedure with readiness-gated `index.html` publication containing inert `application/json` Campaign/Battle Map records, optional JSON/TXT backups, and a data-only launcher-edit path. No origin metadata or security settings are changed. Editor/portable v1 data, legacy registry formats, stable IDs/references and campaign schema 8 remain compatible. No canonical gameplay rule, TBD, §31 mismatch or save policy was changed. Automated results and unperformed Windows/browser verification are distinguished in the report.

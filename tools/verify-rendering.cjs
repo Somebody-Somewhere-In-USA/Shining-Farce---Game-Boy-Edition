@@ -2,13 +2,16 @@
 // This does not launch a browser or claim to verify file:// browser security behavior.
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
 const { createCanvas, loadImage } = require(process.argv[2] || '@napi-rs/canvas');
-const root = path.resolve(__dirname, '..'), out = path.join(root, 'verification');
+const root = path.resolve(__dirname, '..'), outputArg=process.argv.find(a=>a.startsWith('--output=')), out = outputArg?path.resolve(outputArg.slice(9)):path.join(root, 'verification');
 fs.mkdirSync(out, { recursive: true });
 const canvas = createCanvas(480, 360); canvas.style = {};
 const context = vm.createContext({ window: { innerWidth: 1000, innerHeight: 800, addEventListener() {} }, console, canvas });
 const scripts = [...fs.readFileSync(path.join(root, 'index.html'), 'utf8').matchAll(/<script src="([^"]+)"/g)].map(m => m[1]);
 const evaluate = source => vm.runInContext(source, context);
 for (const file of scripts.filter(f => f !== 'js/main.js')) vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context, { filename: file });
+vm.runInContext('window.GBTRPG.editor.ShippingPage.install("null")',context);
+context.launcherSource=fs.readFileSync(path.join(root,'index.html'),'utf8');
+vm.runInContext('window.GBTRPG.editor.ShippingPage.start({querySelectorAll:()=>[],documentElement:{outerHTML:launcherSource.replace(/<!doctype html>/i,"")}})',context);
 const G = context.window.GBTRPG;
 function assert(value, message) { if (!value) throw new Error(message); }
 function verifyPixels(target, allowed, label) {

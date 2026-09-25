@@ -21,7 +21,8 @@
     }
     resetCurrent(){
       G.core.DeveloperRuntime.reset();
-      if(G.data.AUTHORED_CONTENT){const base=G.campaign.createDemo();new G.editor.EditorDocument(base,G.data.AUTHORED_CONTENT);this.campaign=G.editor.AuthoredContent.campaign(G.data.AUTHORED_CONTENT);G.data.WORLD_VISUALS=G.campaign.Validation.freeze(G.campaign.Validation.clone(G.data.AUTHORED_CONTENT.visuals));this.battleProviders={staticMaps:G.data.AUTHORED_CONTENT.battleMaps};}
+      this.authoredContent=G.data.AUTHORED_MAPS.assemble(G.campaign.createDemo(),G.data.AUTHORED_CONTENT,true);
+      if(this.authoredContent){this.campaign=G.editor.AuthoredContent.campaign(this.authoredContent);G.data.WORLD_VISUALS=G.campaign.Validation.freeze(G.campaign.Validation.clone(this.authoredContent.visuals));this.battleProviders={staticMaps:this.authoredContent.battleMaps};}
       else this.campaign=G.campaign.createDemo();
       this.campaignMap=new G.states.CampaignMapState({campaign:this.campaign,renderer:this.renderer,input:this.input,text:this.text,ui:this.ui,managedDeveloperLayer:true,openOptions:()=>this.developer.controls(),worldRenderer:new G.rendering.WorldMapRenderer(this.assets,this.text,this.ui),openBattleFoundation:()=>this.openBattleFoundation(),openSpellLab:()=>this.openSpellLab(),openTactical:()=>this.openTactical(),openEndDay:()=>this.openEndDay()});
       this.states.change(this.campaignMap);if(this.developer?.document)this.developer.document.campaign=this.campaign;

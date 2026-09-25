@@ -116,7 +116,12 @@
     test("DEFINITIONS READ ONLY", () => {
       const c = G.campaign.createDemo(); rejects(() => { c.definitions = {}; }); rejects(() => { c.definitions.locations.galam.name = "X"; });
     });
-    return results.concat(G.debug.runStrategicTests ? G.debug.runStrategicTests() : [], G.debug.runMapTests ? G.debug.runMapTests() : [], G.debug.runResourceTests ? G.debug.runResourceTests() : [], G.debug.runCharacterStatsTests ? G.debug.runCharacterStatsTests() : [], G.debug.runClassFoundationTests ? G.debug.runClassFoundationTests() : [], G.debug.runProgressionConsolidationTests ? G.debug.runProgressionConsolidationTests() : [], G.debug.runSpellFrameworkTests ? G.debug.runSpellFrameworkTests() : [], G.debug.runSpellCorrectionsTests ? G.debug.runSpellCorrectionsTests() : [], G.debug.runRouteMidpointTests ? G.debug.runRouteMidpointTests() : [], G.debug.runBattleFoundationTests ? G.debug.runBattleFoundationTests() : [], G.debug.runDeveloperToolsTests ? G.debug.runDeveloperToolsTests() : [], G.debug.runDeploymentOceanTests ? G.debug.runDeploymentOceanTests() : []);
+    return results.concat(G.debug.runStrategicTests ? G.debug.runStrategicTests() : [], G.debug.runMapTests ? G.debug.runMapTests() : [], G.debug.runResourceTests ? G.debug.runResourceTests() : [], G.debug.runCharacterStatsTests ? G.debug.runCharacterStatsTests() : [], G.debug.runClassFoundationTests ? G.debug.runClassFoundationTests() : [], G.debug.runProgressionConsolidationTests ? G.debug.runProgressionConsolidationTests() : [], G.debug.runSpellFrameworkTests ? G.debug.runSpellFrameworkTests() : [], G.debug.runSpellCorrectionsTests ? G.debug.runSpellCorrectionsTests() : [], G.debug.runRouteMidpointTests ? G.debug.runRouteMidpointTests() : [], G.debug.runBattleFoundationTests ? G.debug.runBattleFoundationTests() : [], G.debug.runDeveloperToolsTests ? G.debug.runDeveloperToolsTests() : [], G.debug.runDeploymentOceanTests ? G.debug.runDeploymentOceanTests() : [], G.debug.runAuthoringPersistenceTests ? G.debug.runAuthoringPersistenceTests() : [], G.debug.runShippingPageTests ? G.debug.runShippingPageTests() : []);
   }
-  G.debug.runFoundationTests = runFoundationTests;
+  const foundationVisuals=G.data.WORLD_VISUALS;
+  G.debug.runFoundationTests = function(){
+    const previous={registry:G.data.AUTHORED_MAPS,legacy:G.data.AUTHORED_CONTENT,visuals:G.data.WORLD_VISUALS,runtime:{...G.core.DeveloperRuntime}};
+    try{G.data.AUTHORED_MAPS=new G.editor.AuthoredRegistry();G.data.AUTHORED_MAPS.useDemo();G.data.AUTHORED_CONTENT=null;G.data.WORLD_VISUALS=foundationVisuals;return runFoundationTests();}
+    finally{G.data.AUTHORED_MAPS=previous.registry;G.data.AUTHORED_CONTENT=previous.legacy;G.data.WORLD_VISUALS=previous.visuals;Object.assign(G.core.DeveloperRuntime,previous.runtime);}
+  };
 }(window.GBTRPG));

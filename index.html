@@ -169,11 +169,572 @@
   <script src="js/editor/BattleMapAuthoring.js"></script>
   <script src="js/editor/EditorDocument.js"></script>
   <script src="js/editor/AuthoredContent.js"></script>
+  <script src="js/editor/AuthoredFiles.js"></script>
+  <script src="js/editor/AuthoredRegistry.js"></script>
+  <script src="js/editor/ShippingPage.js"></script>
   <script src="js/editor/PropertyScreen.js"></script>
   <script src="js/editor/EditorFiles.js"></script>
   <script src="js/editor/DeveloperShell.js"></script>
   <script src="js/editor/MapEditorState.js"></script>
-  <script src="js/data/authored-content.js"></script>
+  <!-- BEGIN AUTHORED MAP ASSETS -->
+<script type="application/json" id="shining-farce-shipping-data">
+{
+  "campaign": {
+    "battleMapIds": [],
+    "document": {
+      "entities": [],
+      "nextId": 1,
+      "version": 1,
+      "visuals": {
+        "height": 40,
+        "rows": [
+          "wwwww............mmmmmmmmmmmmmmmmmmmmmmmmmmm..............wwwwww",
+          "wwwww............mmmmmmmmmmmmmmmmmmmmmmmmmmm..............wwwwww",
+          "wwwww............mmmmmmmmmmmmmmmmmmmmmmmmmmm..............wwwwww",
+          "wwwww............mmmmmmmmmmmmmmmmmmmmmmmmmmm..............wwwwww",
+          "wwwww......w.....mmmmmmmmmmmmmmmmmmmmmmmmmmm..............wwwwww",
+          "wwwww......f......ff.............mmmmmm...................wwwwww",
+          "wwwww.......f...f...f............mmmmmm...................wwwwww",
+          "wwwww........ff....ff................mm...................wwwwww",
+          "wwwww.........................r......mm...................wwwwww",
+          "wwwww....................rrrrr.......rm...................wwwwww",
+          "wwwww..................rr........rmmmmrrr.................wwwwww",
+          "wwwww............................rmmmmm..rrrr.............wwwwww",
+          "................r................mrmmmm......rrrr.........wwwwww",
+          "...............r.................mrmmmm...................wwwwww",
+          ".............rr..................mmrmmm...................wwwwww",
+          "............r....................mmrmmm...................wwwwww",
+          "...........r.....................mmmrmm...................wwwwww",
+          ".................................mmmrmm...................wwwwww",
+          ".................................mmmrmm...................wwwwww",
+          ".................................mmmmrm...................wwwwww",
+          "...........rr...fffffffffffff....mmmmrm...................wwwwww",
+          ".............rr.fffffffffffff.........r...................wwwwww",
+          "...............rfffffffffffff.........r...................wwwwww",
+          "................rrfffffffffff.............................wwwwww",
+          "ffffffff........ffrrfffffffff......rrr....................wwwwww",
+          "ffffffff........ffffr......rrrrrrrr.......................wwwwww",
+          "ffffffff........fffff......ff.sssssssssssssrrss...........wwwwww",
+          "ffffffff........fffff......ff.sssssssssssssssrr...........wwwwww",
+          "ffffffff........fffffffffffff.sssssssssssssssssrr.........wwwwww",
+          "ffffffff........fffffffffffff.sssssssssssssssss..rr.......wwwwww",
+          "ffffffff........fffffffffffff.sssssssssssssssss....rr.....wwwwww",
+          "ffffffff........fffffffffffff.sssssssssssssssss......rr......www",
+          "ffffffff......................sssssssssssssssss..............www",
+          "ffffffff......................sssssssssssssssss..............www",
+          "ffffffff......................sssssssssssssssss...........wwwwww",
+          "ffffffff..................................................wwwwww",
+          "ffffffff..................................................wwwwww",
+          "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+          "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+          "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+        ],
+        "tileSize": 16,
+        "tiles": {
+          ".": 0,
+          "f": 2,
+          "m": 3,
+          "r": 4,
+          "s": 5,
+          "w": 1
+        },
+        "width": 64
+      },
+      "world": {
+        "id": "foundation-world",
+        "locations": {
+          "crossroads": {
+            "appearanceId": "sign",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 0,
+              "shops": {}
+            },
+            "id": "crossroads",
+            "locationType": "CROSSROADS",
+            "mapPosition": {
+              "x": 288,
+              "y": 176
+            },
+            "name": "OLD CROSSROADS",
+            "polityId": "granseal",
+            "questAssociations": [],
+            "settlement": {
+              "allegiance": "PLAYER",
+              "defaultTier": 1,
+              "enabled": false,
+              "income": 0,
+              "recruitment": {
+                "classes": [],
+                "races": []
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "ARMOR": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "CONSUMABLE": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": false,
+                  "tier": 1
+                }
+              },
+              "type": "Village"
+            }
+          },
+          "fortress": {
+            "appearanceId": "fort",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 15,
+              "shops": {}
+            },
+            "id": "fortress",
+            "locationType": "FORTRESS",
+            "mapPosition": {
+              "x": 624,
+              "y": 384
+            },
+            "name": "BORDER FORT",
+            "polityId": "galam",
+            "questAssociations": [],
+            "settlement": {
+              "allegiance": "ZEON",
+              "defaultTier": 1,
+              "enabled": true,
+              "income": 15,
+              "recruitment": {
+                "classes": [],
+                "races": []
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "ARMOR": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "CONSUMABLE": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": false,
+                  "tier": 1
+                }
+              },
+              "type": "Fort"
+            }
+          },
+          "galam": {
+            "appearanceId": "capital",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 80,
+              "recruitment": {
+                "count": 3,
+                "levelModifier": 1,
+                "types": [
+                  "mage",
+                  "swordsman"
+                ]
+              },
+              "shops": {
+                "ACCESSORY": 2,
+                "ARMOR": 2,
+                "CONSUMABLE": 1,
+                "WEAPON": 2
+              }
+            },
+            "id": "galam",
+            "locationType": "CAPITAL",
+            "mapPosition": {
+              "x": 512,
+              "y": 128
+            },
+            "name": "GALAM CAPITAL",
+            "polityId": "galam",
+            "questAssociations": [],
+            "settlement": {
+              "allegiance": "NEUTRAL",
+              "defaultTier": 1,
+              "enabled": true,
+              "income": 80,
+              "recruitment": {
+                "classes": [
+                  "mage",
+                  "swordsman"
+                ],
+                "races": [
+                  "HUMAN"
+                ]
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": true,
+                  "tier": 2
+                },
+                "ARMOR": {
+                  "enabled": true,
+                  "tier": 2
+                },
+                "CONSUMABLE": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": true,
+                  "tier": 2
+                }
+              },
+              "type": "Castle"
+            }
+          },
+          "granseal": {
+            "appearanceId": "capital",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 60,
+              "recruitment": {
+                "count": 3,
+                "levelModifier": 0,
+                "types": [
+                  "swordsman",
+                  "healer",
+                  "mage"
+                ]
+              },
+              "shops": {
+                "ACCESSORY": 1,
+                "ARMOR": 1,
+                "CONSUMABLE": 1,
+                "WEAPON": 1
+              }
+            },
+            "id": "granseal",
+            "locationType": "CAPITAL",
+            "mapPosition": {
+              "x": 128,
+              "y": 288
+            },
+            "name": "GRANSEAL",
+            "polityId": "granseal",
+            "questAssociations": [],
+            "recruitmentRefs": [],
+            "services": [],
+            "settlement": {
+              "allegiance": "PLAYER",
+              "defaultTier": 1,
+              "enabled": true,
+              "income": 60,
+              "recruitment": {
+                "classes": [
+                  "swordsman",
+                  "healer",
+                  "mage"
+                ],
+                "races": [
+                  "HUMAN"
+                ]
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "ARMOR": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "CONSUMABLE": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": true,
+                  "tier": 1
+                }
+              },
+              "type": "Castle"
+            },
+            "story": {}
+          },
+          "grove": {
+            "appearanceId": "village",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 25,
+              "recruitment": {
+                "count": 3,
+                "levelModifier": 0,
+                "types": [
+                  "centaur",
+                  "healer"
+                ]
+              },
+              "shops": {
+                "CONSUMABLE": 1,
+                "WEAPON": 1
+              }
+            },
+            "id": "grove",
+            "locationType": "VILLAGE",
+            "mapPosition": {
+              "x": 352,
+              "y": 416
+            },
+            "name": "ELDER GROVE",
+            "polityId": "granseal",
+            "questAssociations": [],
+            "settlement": {
+              "allegiance": "PLAYER",
+              "defaultTier": 1,
+              "enabled": true,
+              "income": 25,
+              "recruitment": {
+                "classes": [
+                  "centaur",
+                  "healer"
+                ],
+                "races": [
+                  "CENTAUR",
+                  "HUMAN"
+                ]
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "ARMOR": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "CONSUMABLE": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": true,
+                  "tier": 1
+                }
+              },
+              "type": "Village"
+            }
+          },
+          "port": {
+            "appearanceId": "village",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 40,
+              "shops": {
+                "ARMOR": 1,
+                "CONSUMABLE": 1
+              }
+            },
+            "id": "port",
+            "locationType": "PORT",
+            "mapPosition": {
+              "x": 800,
+              "y": 208
+            },
+            "name": "GALAM PORT",
+            "polityId": "galam",
+            "questAssociations": [],
+            "settlement": {
+              "allegiance": "NEUTRAL",
+              "defaultTier": 1,
+              "enabled": true,
+              "income": 40,
+              "recruitment": {
+                "classes": [],
+                "races": []
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "ARMOR": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "CONSUMABLE": {
+                  "enabled": true,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": false,
+                  "tier": 1
+                }
+              },
+              "type": "Town"
+            }
+          },
+          "shrine": {
+            "appearanceId": "shrine",
+            "battleMaps": [],
+            "economy": {
+              "dailyIncomeG": 0,
+              "shops": {}
+            },
+            "id": "shrine",
+            "locationType": "SHRINE",
+            "mapPosition": {
+              "x": 896,
+              "y": 512
+            },
+            "name": "DAWN SHRINE",
+            "polityId": "order",
+            "questAssociations": [],
+            "settlement": {
+              "allegiance": "NEUTRAL",
+              "defaultTier": 1,
+              "enabled": true,
+              "income": 0,
+              "recruitment": {
+                "classes": [],
+                "races": []
+              },
+              "shops": {
+                "ACCESSORY": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "ARMOR": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "CONSUMABLE": {
+                  "enabled": false,
+                  "tier": 1
+                },
+                "WEAPON": {
+                  "enabled": false,
+                  "tier": 1
+                }
+              },
+              "type": "Village"
+            }
+          }
+        },
+        "name": "THE BORDERLANDS",
+        "polities": {
+          "galam": {
+            "capitalLocationId": "galam",
+            "category": "KINGDOM",
+            "id": "galam",
+            "locationIds": [
+              "galam",
+              "port",
+              "fortress"
+            ],
+            "name": "GALAM",
+            "politics": {}
+          },
+          "granseal": {
+            "capitalLocationId": "granseal",
+            "category": "KINGDOM",
+            "id": "granseal",
+            "locationIds": [
+              "granseal",
+              "crossroads",
+              "grove"
+            ],
+            "name": "GRANSEAL",
+            "politics": {}
+          },
+          "order": {
+            "category": "RELIGIOUS ORDER",
+            "id": "order",
+            "locationIds": [
+              "shrine"
+            ],
+            "name": "DAWN ORDER",
+            "petitionLocationId": "shrine",
+            "politics": {}
+          }
+        },
+        "routes": {
+          "dawnBridge": {
+            "id": "dawnBridge",
+            "locationAId": "fortress",
+            "locationBId": "shrine",
+            "primaryTerrain": "grassland",
+            "routeType": "bridge",
+            "travelDays": 1
+          },
+          "groveTrail": {
+            "id": "groveTrail",
+            "locationAId": "granseal",
+            "locationBId": "grove",
+            "primaryTerrain": "forest",
+            "routeType": "trail",
+            "travelDays": 1
+          },
+          "kingRoad": {
+            "id": "kingRoad",
+            "locationAId": "crossroads",
+            "locationBId": "galam",
+            "primaryTerrain": "grassland",
+            "routeType": "road",
+            "travelDays": 1
+          },
+          "marshWay": {
+            "id": "marshWay",
+            "locationAId": "grove",
+            "locationBId": "fortress",
+            "primaryTerrain": "swamp",
+            "routeType": "causeway",
+            "travelDays": 1
+          },
+          "northPass": {
+            "id": "northPass",
+            "locationAId": "galam",
+            "locationBId": "fortress",
+            "primaryTerrain": "mountain",
+            "routeType": "pass",
+            "travelDays": 1
+          },
+          "portRoad": {
+            "id": "portRoad",
+            "locationAId": "galam",
+            "locationBId": "port",
+            "primaryTerrain": "grassland",
+            "routeType": "road",
+            "travelDays": 1
+          },
+          "westRoad": {
+            "battle": {},
+            "id": "westRoad",
+            "locationAId": "granseal",
+            "locationBId": "crossroads",
+            "modifiers": [],
+            "primaryTerrain": "grassland",
+            "routeType": "road",
+            "travelDays": 1,
+            "wilderness": {}
+          }
+        }
+      }
+    },
+    "version": 1
+  },
+  "format": "SHINING_FARCE_SHIPPING_PAGE",
+  "maps": [],
+  "version": 1
+}
+</script>
+<!-- END AUTHORED MAP ASSETS -->
   <script src="js/debug/FoundationTests.js"></script>
   <script src="js/debug/StrategicMovementTests.js"></script>
   <script src="js/debug/MapPresentationTests.js"></script>
@@ -187,6 +748,8 @@
   <script src="js/debug/BattleFoundationTests.js"></script>
   <script src="js/debug/DeveloperToolsTests.js"></script>
   <script src="js/debug/DeploymentOceanTests.js"></script>
+  <script src="js/debug/AuthoringPersistenceTests.js"></script>
+  <script src="js/debug/ShippingPageTests.js"></script>
   <!-- Composition root -->
   <script src="js/core/Game.js"></script>
   <script src="js/main.js"></script>

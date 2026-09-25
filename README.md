@@ -44,17 +44,42 @@ Author six or more individual Front and Back positions for each active approach.
 
 **Validate Battle Map** reports errors. **Preview Normal Battle Map** renders the terrain through the normal battle renderer without starting an interception or mutating the campaign. Full authored test-battle launch, production approach mapping and unresolved combat rules remain provider boundaries. Ocean is intentionally non-traversable and non-occupiable by ordinary units, including ordinary deployment. Flying can traverse and occupy it at 1 MOV per tile, with normal bounds, collision, expiration and AWOL rules. Campaign movement still follows explicit graph routes, without interpreting their drawn lines as terrain-cell paths.
 
-## Save, restore and ship authored content
+## Save, restore and publish authored content
 
-Editor changes remain in a separate working draft. They do not immediately rewrite the live campaign.
+There are three separate copies: the **browser working draft**, **portable JSON backups**, and **shipping data embedded in the project's `index.html`**. Saving/importing a draft does not change project files or the live campaign. Publishing downloads files; you install them explicitly.
 
-1. In the Dev Menu or an editor's Menu, choose **Save / Import / Export** (Dev Menu: **Editor Files / Save Import Export**).
-2. **Save Working Copy in This Browser** explicitly saves the draft. **Restore Browser Working Copy** restores it after confirmation. Storage failure is visible; `file://` storage behavior varies by browser and folder.
-3. **Export Editor Backup JSON** downloads a portable backup, including incomplete maps. **Import Editor Backup JSON** restores it after confirmation and validation.
-4. Finish deployment authoring and validate every Battle Map. **Export Shipping Authored-Content.js** downloads the complete world, terrain, location, route and battle-map definitions as a classic JavaScript data file. Incomplete/invalid battle maps block this export.
-5. Close the game. In File Explorer, copy the downloaded **authored-content.js** into this project's **js/data** folder, replacing the placeholder file with that exact name. Back up the previous file first. The browser cannot silently rewrite project files.
-6. Reopen **index.html**. A new runtime now uses the exported campaign map and locations, and the battle initialization provider can select the exported maps. Existing campaign-save files are not rewritten or auto-migrated to a different authored world.
-7. Distribute the whole project folder with that replaced file and all assets. No generated PNG, server, build or package install is required for data-only map edits.
+### Edit → save → back up → restore
+
+1. Open `index.html`, open Terminal with backtick, enter `devmode`, close Terminal, then press **]**.
+2. The editor begins with installed content. Use **Edit Campaign Map** for terrain and **Edit Locations** for locations, routes and Battle Map references. **Editor Files / Save Import Export → Load Working Copy From This Browser** resumes a saved draft after confirmation. **Reload Installed Content Into Editor** discards the draft after confirmation and restores the source loaded by this page.
+3. **Save Working Copy In This Browser** saves only `shining-farce.editor.v1`. Browser/folder changes can affect storage; keep portable backups too.
+4. **Export Portable Backup / All Data** downloads the complete v1 editor JSON, including incomplete maps. Campaign Map/dependencies, individual Battle Map and Battle Map collection JSON exports remain available.
+5. **Import Authored Data / JSON Into Editor** parses/validates, then asks for confirmation. Full backups replace the draft; Campaign Map imports replace campaign fields and merge dependencies; individual/collection imports merge maps. Same-ID replacements are listed explicitly. Cancel leaves the draft unchanged. Save the browser working copy separately if desired.
+
+### Publish/install → reopen
+
+1. Finish and validate every Battle Map, including unreferenced maps. Keep a portable backup.
+2. Choose **Export Shipping Index.html**. This downloads a ready launcher containing one **non-executable `application/json` block**, with separate Campaign Map and Battle Map records. Existing game code stays in its installed files. No generated `.js` assets are downloaded or copied.
+3. Close the game and back up your project. In File Explorer, replace **only the project's `index.html`** with the downloaded file. If the browser added `(1)` to the filename, use the exact name `index.html`. Put it beside the existing `js`, `css` and `assets` folders; opening it in Downloads will not find the game files.
+4. Reopen `index.html`. The installed page now supplies the normal-game maps. Distribute the **whole project folder**. There is no server, build, npm, network or extra player-launch step.
+
+**Export Shipping Package / ZIP** is an optional grouped download: extract into a temporary folder and copy only `index.html` into the updated project. Keep `editor-backup.json` and the `portable/*.json` files as backups. `INSTALL.txt` describes the workflow. There is no script-list editing and no need to copy or unblock executable `.js` files. Old `map-scripts.html` instructions and generated map JS files are no longer used by the corrected launcher.
+
+Windows/browser policies can still warn about a downloaded HTML page or archive. Do not disable security or remove origin markings. The built-in **Export Shipping Data Block / TXT** option downloads only inert data markup: open the text in Notepad, copy all of it, then open your **existing updated project's** `index.html` in Notepad and replace the entire block from `<!-- BEGIN AUTHORED MAP ASSETS -->` through `<!-- END AUTHORED MAP ASSETS -->` with the copied text. Save and reopen the game. This edits data in the existing launcher; it does not execute an import or remove security metadata. If policy also blocks that operation, stop and report the exact warning, browser and extraction method.
+
+### Replace, add or remove Battle Maps
+
+- **Replace:** select the existing ID under **Battle Map Files / Edit / Export**, edit or import its JSON and confirm the same-ID replacement. Validate, then **Publish Map Changes / Index.html**. Replace one launcher file; existing location references keep their IDs. You publish the complete ready map set even when only one map changed.
+- **Add:** location properties → **Battle Maps → Create New Battle Map**, or import an individual map's JSON. Use **Associate / Remove Existing Map References** to attach an imported map to locations. Author conditions, terrain, deployment and specials; validate and publish a fresh launcher. No manifest/script tags need editing.
+- **Remove:** detach the map from every referencing location, then use **Battle Map Files / Edit / Export → [map] → Delete Unreferenced Battle Map** and confirm. Referenced-map deletion is rejected. Publish a fresh launcher to remove it from shipping content. Until publication, only the draft changes.
+
+Display-name edits preserve IDs. Applicability, approach, deployment and selection rules are unchanged. Campaign and individual-map JSON exports remain useful independent editing/transfer units even though deployment is now one launcher replacement.
+
+### Compatibility and Windows verification
+
+EditorDocument v1, `shining-farce.editor.v1`, raw v1 JSON, partial `SHINING_FARCE_AUTHORED` v1 JSON and campaign schema 8 are unchanged. Already installed legacy monolithic/split data remain supported through the registry; export their full JSON backup and import it into the updated project to migrate. Do not override Windows warnings to install old JS packages. The surviving `editor-backup.json` from this workspace's failed installation was preserved and used to recover the same Campaign Map into the corrected launcher.
+
+Automated/offline checks pass, but the browser automation environment blocks `file://` navigation and cannot control Windows Explorer. **Actual Windows download/install success is not claimed.** Test on a backup project: make a visible map-name change, export the HTML (and ZIP if used), install with ordinary Explorer, reopen offline, confirm the change, then repeat for same-ID replacement and add/remove. Keep all Windows protections enabled. If HTML placement is blocked, test the TXT data-edit path and record the result. See the [Windows correction report](docs/WINDOWS-SHIPPING-CORRECTION.md) for diagnosis and verification boundaries.
 
 Default standard Xbox button mapping: D-pad/left stick navigate, A Accept, B Cancel, RT Menu, Menu button Start, LB Select, View Terminal and RB Dev Menu. These are browser-standard button indices; controller/browser exposure can vary. Keyboard text is required for commands and text properties. Some legacy gameplay hints still show default key names after remapping.
 
@@ -171,7 +196,7 @@ Battle CT, event queues, scene frames, camera and cursor are transient. They are
 
 ## Verification
 
-**In game:** enable `devmode`, then **] → Game State → Run Rule Checks**. Tests use disposable state and leave the demo unchanged. The harness passes **778/778 deterministic checks**, including 42 new Prompt #8A checks, 118 Prompt #8 checks, all 80 Prompt #7 checks, the prior campaign/serialization/economy/progression suites, spell/lifecycle/Portal/AWOL tests, route-midpoint checks and updated superseded expectations.
+**In game:** enable `devmode`, then **] → Game State → Run Rule Checks**. Tests use disposable state and leave the demo unchanged. The harness passes **863/863 deterministic checks**, including 26 Windows shipping checks, 59 authoring-persistence checks, 42 Prompt #8A checks, 118 Prompt #8 checks, all 80 Prompt #7 checks, the prior campaign/serialization/economy/progression suites, spell/lifecycle/Portal/AWOL tests, route-midpoint checks and updated superseded expectations.
 
 Optional developer commands:
 
