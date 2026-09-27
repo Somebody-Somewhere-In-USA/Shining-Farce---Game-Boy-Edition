@@ -7,6 +7,8 @@ module.exports=function({evaluate,snapshot,assert}){
  const action=a=>evaluate(`editorGame.input.enqueueAction(${JSON.stringify(a)});if(!shell.update(16))editorGame.states.update(16);`);
  const choose=label=>{const labels=evaluate('shell.overlay.items().map(f=>f.label)'),n=labels.indexOf(label);assert(n>=0,'Missing developer option: '+label);evaluate(`shell.overlay.index=${n}`);action('confirm');};
  const type=line=>{for(const k of line)evaluate(`editorGame.input.onKeyDown({code:'Key'+${JSON.stringify(k)}.toUpperCase(),key:${JSON.stringify(k)},preventDefault(){}})`);evaluate("editorGame.input.onKeyDown({code:'Enter',key:'Enter',preventDefault(){}})");};
+ evaluate('editorGame.campaignMap.menu()');snapshot('campaign-menu-options-visible');assert(evaluate('editorGame.campaignMap.list.items.findIndex(i=>i.label==="OPTIONS / CONTROLS")<editorGame.campaignMap.list.visibleRows'),'Options is below first page');evaluate('editorGame.campaignMap.back()');
+ evaluate('const beforeListRender=active;const capacityList=new G.ui.SelectableList(Array.from({length:30},(_,i)=>({label:"MENU ITEM "+(i+1)})));active={render:()=>ui.list(renderer.ctx,"LIST CAPACITY",capacityList)}');snapshot('menu-full-capacity');evaluate('for(let i=0;i<29;i++)capacityList.move(1)');snapshot('menu-overflow-last');evaluate('active=beforeListRender');
  action('devmenu');assert(evaluate('shell.overlay===null'),'Dev menu leaked while disabled');
  action('terminal');type('devmode');snapshot('developer-terminal');action('terminal');
  action('devmenu');snapshot('developer-campaign-menu');choose('EDIT CAMPAIGN MAP');

@@ -16,13 +16,14 @@
     list(ctx, title, list, footer="Z OK  X BACK") {
       this.window(ctx, 0, 0, G.config.INTERNAL_WIDTH, G.config.INTERNAL_HEIGHT);
       this.text.draw(ctx, title, 8, 8, 50);
+      const {listTop,listRowHeight,listFooterY:footerY}=G.config.UI;
       if (!list.items.length) this.text.draw(ctx, "NO ELIGIBLE ENTRIES", 8, 28, 24);
       list.items.slice(list.offset, list.offset + list.visibleRows).forEach((item, row) => {
-        this.text.draw(ctx, item.label, 18, 26 + row * 12, 48);
-        if (list.index === list.offset + row) this.cursor(ctx, 7, 26 + row * 12);
+        this.text.draw(ctx, item.label, 18, listTop + row * listRowHeight, 48);
+        if (list.index === list.offset + row) this.cursor(ctx, 7, listTop + row * listRowHeight);
       });
-      this.text.draw(ctx, footer, 8, G.config.INTERNAL_HEIGHT-18);
-      if (list.items.length > list.visibleRows) this.text.draw(ctx, (list.index + 1) + "/" + list.items.length, G.config.INTERNAL_WIDTH-56, G.config.INTERNAL_HEIGHT-18, 7);
+      this.text.draw(ctx, footer, 8, footerY);
+      if (list.items.length > list.visibleRows) this.text.draw(ctx, (list.index + 1) + "/" + list.items.length, G.config.INTERNAL_WIDTH-56, footerY, 7);
     }
     popup(ctx, title, list, bounds) {
       const { x, y, width, height } = bounds;

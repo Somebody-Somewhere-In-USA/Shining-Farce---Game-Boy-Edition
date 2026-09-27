@@ -6,6 +6,7 @@
       Object.assign(this, dependencies);
     }
 
+    displayPaletteSelectAllowed(){return true;}
     update() {
       const action = this.input.consumeAction();
       if (action === "cancel" || action === "menu") { this.returnToCampaign?.(); return; }

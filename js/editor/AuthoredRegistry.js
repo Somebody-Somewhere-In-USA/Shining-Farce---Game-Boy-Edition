@@ -16,7 +16,7 @@
    if(!legacy&&!split)return null;
    let data=legacy;
    if(split){V.assert(this.campaign,"shipping Campaign Map script missing");F.matchMapIds(this.maps,this.campaign.battleMapIds);data={...V.clone(this.campaign.document),battleMaps:V.clone(this.maps)};}
-   const doc=new G.editor.EditorDocument(base,data);F.ready(doc);return doc.data;
+   const doc=new G.editor.EditorDocument(base,data);F.ready(doc,{presentation:false});return doc.data;
   }
  }
  G.editor.AuthoredRegistry=AuthoredRegistry;

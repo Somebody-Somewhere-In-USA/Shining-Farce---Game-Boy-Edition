@@ -21,6 +21,7 @@
     showList(title, items) { this.pushView(); this.mode = "list"; this.title = title; this.list = new G.ui.SelectableList(items); }
     showPage(title, lines) { this.pushView(); this.mode = "page"; this.title = title; this.lines = lines.flatMap(line => this.text.wrap(line, G.config.UI.pageColumns)); this.page = 0; }
     objects() { return G.ui.MapPresentation.derive(this.campaign, this.visibilityPolicy); }
+    displayPaletteSelectAllowed(){return this.mode==="map"&&!this.returnMessages?.length&&G.ui.MapPresentation.atCell(this.objects(),this.cursor.x,this.cursor.y).length<=1;}
     selectedObject() {
       const hits = G.ui.MapPresentation.atCell(this.objects(), this.cursor.x, this.cursor.y);
       return hits[this.overlapIndex % Math.max(1, hits.length)] || null;

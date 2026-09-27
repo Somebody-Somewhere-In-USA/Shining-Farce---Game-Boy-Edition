@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/game.css">
 </head>
 <body>
-  <canvas id="game" width="480" height="360" tabindex="0" aria-label="Shining Farce. Arrows move the map cursor, Enter selects, Q cycles squads, Escape goes back, M opens the menu."></canvas>
+  <canvas id="game" width="480" height="360" tabindex="0" aria-label="Shining Farce. Arrows move the map cursor, Enter selects, Q changes display palette or cycles stacked squads, Escape goes back, M opens the menu."></canvas>
   <p id="status" class="accessible-status" role="status">Loading Shining Farce.</p>
   <noscript>Enable JavaScript to play Shining Farce.</noscript>
   <!-- Classic scripts, ordered by dependency. No fetch, modules, server or build. -->
@@ -17,12 +17,14 @@
   <script src="js/config/battleConfig.js"></script>
   <script src="js/config/graphicsConfig.js"></script>
   <script src="js/config/palette.js"></script>
+  <script src="js/config/displayPalettes.js"></script>
   <script src="js/config/campaignConfig.js"></script>
   <script src="js/config/characterStatsConfig.js"></script>
   <script src="js/config/classConfig.js"></script>
   <script src="js/config/spellConfig.js"></script>
   <!-- External definitions -->
   <script src="js/data/assets.js"></script>
+  <script src="js/data/assetCatalog.js"></script>
   <script src="js/data/maps.js"></script>
   <script src="js/data/terrain.js"></script>
   <script src="js/data/characters.js"></script>
@@ -133,6 +135,7 @@
   <script src="js/systems/ExperienceSystem.js"></script>
   <script src="js/systems/AISystem.js"></script>
   <!-- Presentation -->
+  <script src="js/rendering/DisplayPalette.js"></script>
   <script src="js/rendering/Renderer.js"></script>
   <script src="js/rendering/MapRenderer.js"></script>
   <script src="js/rendering/UnitRenderer.js"></script>
@@ -167,6 +170,10 @@
   <script src="js/editor/LocationModel.js"></script>
   <script src="js/editor/MapAuthoring.js"></script>
   <script src="js/editor/BattleMapAuthoring.js"></script>
+  <script src="js/editor/BattleSceneAssets.js"></script>
+  <script src="js/rendering/SceneAssetLoader.js"></script>
+  <script src="js/editor/SceneAssetAvailability.js"></script>
+  <script src="js/rendering/SceneAnimationPlayer.js"></script>
   <script src="js/editor/EditorDocument.js"></script>
   <script src="js/editor/AuthoredContent.js"></script>
   <script src="js/editor/AuthoredFiles.js"></script>
@@ -174,6 +181,7 @@
   <script src="js/editor/ShippingPage.js"></script>
   <script src="js/editor/PropertyScreen.js"></script>
   <script src="js/editor/EditorFiles.js"></script>
+  <script src="js/editor/AssetBrowser.js"></script>
   <script src="js/editor/DeveloperShell.js"></script>
   <script src="js/editor/MapEditorState.js"></script>
   <!-- BEGIN AUTHORED MAP ASSETS -->
@@ -750,6 +758,8 @@
   <script src="js/debug/DeploymentOceanTests.js"></script>
   <script src="js/debug/AuthoringPersistenceTests.js"></script>
   <script src="js/debug/ShippingPageTests.js"></script>
+  <script src="js/debug/BattleSceneAssetTests.js"></script>
+  <script src="js/debug/AssetAcceptanceTests.js"></script>
   <!-- Composition root -->
   <script src="js/core/Game.js"></script>
   <script src="js/main.js"></script>

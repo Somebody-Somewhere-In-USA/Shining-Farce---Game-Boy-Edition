@@ -52,7 +52,7 @@ There are three separate copies: the **browser working draft**, **portable JSON 
 
 1. Open `index.html`, open Terminal with backtick, enter `devmode`, close Terminal, then press **]**.
 2. The editor begins with installed content. Use **Edit Campaign Map** for terrain and **Edit Locations** for locations, routes and Battle Map references. **Editor Files / Save Import Export → Load Working Copy From This Browser** resumes a saved draft after confirmation. **Reload Installed Content Into Editor** discards the draft after confirmation and restores the source loaded by this page.
-3. **Save Working Copy In This Browser** saves only `shining-farce.editor.v1`. Browser/folder changes can affect storage; keep portable backups too.
+3. **Save Working Copy In This Browser** saves only `shining-farce.editor.v1`. The save is immediately read back before confirmation; restore remains explicit. **Working Copy Storage Details** shows the page, key and stored-record status. Browser clearing and file-URL storage policy can affect retention, including across restart. Keep a portable JSON backup before closing; the owner has now confirmed explicit restore after both a complete Brave restart and Windows restart at the same path/profile. The earlier apparent loss is no longer considered a persistence defect.
 4. **Export Portable Backup / All Data** downloads the complete v1 editor JSON, including incomplete maps. Campaign Map/dependencies, individual Battle Map and Battle Map collection JSON exports remain available.
 5. **Import Authored Data / JSON Into Editor** parses/validates, then asks for confirmation. Full backups replace the draft; Campaign Map imports replace campaign fields and merge dependencies; individual/collection imports merge maps. Same-ID replacements are listed explicitly. Cancel leaves the draft unchanged. Save the browser working copy separately if desired.
 
@@ -93,7 +93,7 @@ See [PROMPT8A-IMPLEMENTATION.md](docs/PROMPT8A-IMPLEMENTATION.md) for deployment
 | --- | --- |
 | Arrows / WASD | Move the cursor; navigate menus and pages |
 | Z / Enter / Space | Select / confirm |
-| Q | Cycle squads on the same strategic cell; page the battle forecast |
+| Q / logical Select | Cycle display palettes in ordinary gameplay; stacked squads, long battle forecasts and editor/menu functions take precedence |
 | X / Escape / Backspace | Back / cancel an uncommitted preview |
 | M / Tab or P | Campaign menu; M inspects End Day resolution |
 | Backtick (`) | Toggle Terminal; Enter runs typed commands |
@@ -196,7 +196,7 @@ Battle CT, event queues, scene frames, camera and cursor are transient. They are
 
 ## Verification
 
-**In game:** enable `devmode`, then **] → Game State → Run Rule Checks**. Tests use disposable state and leave the demo unchanged. The harness passes **863/863 deterministic checks**, including 26 Windows shipping checks, 59 authoring-persistence checks, 42 Prompt #8A checks, 118 Prompt #8 checks, all 80 Prompt #7 checks, the prior campaign/serialization/economy/progression suites, spell/lifecycle/Portal/AWOL tests, route-midpoint checks and updated superseded expectations.
+**In game:** enable `devmode`, then **] → Game State → Run Rule Checks**. Tests use disposable state and leave the demo unchanged. The harness passes **950/950 deterministic checks**, including 50 acceptance/follow-up checks, 37 Battle Scene asset checks, 26 Windows shipping checks, 59 authoring-persistence checks, 42 Prompt #8A checks, 118 Prompt #8 checks, all 80 Prompt #7 checks, the prior campaign/serialization/economy/progression suites, spell/lifecycle/Portal/AWOL tests, route-midpoint checks and updated superseded expectations.
 
 Optional developer commands:
 
@@ -209,3 +209,16 @@ node tools/verify-palette.cjs PATH_TO_EXISTING_CANVAS_PACKAGE
 The second command uses an already available `@napi-rs/canvas`; neither command or package is needed to play. Offline checks validate all 31 PNGs under assets (22 runtime manifest entries), strict four-color opaque framebuffers, five resize cases, established campaign/menu/input flows, the spell lab, battle map/scenes, and all new editor/control screens. `verification/` contains Canvas2D renders and [results.json](verification/results.json), not browser screenshots.
 
 Direct browser `file://` launch was not verified in this environment: the earlier attempt was rejected by the browser URL policy and no workaround was used. The local classic-script runtime architecture remains intact.
+
+
+## Battle Scene artwork and animation authoring
+
+Stage 1 adds **ASSET BROWSER / BATTLE SCENE TOOLS** to the Developer Menu. Put external PNGs in `assets/battle-scene/units`, `backgrounds`, `floors` or `effects`, double-click **Update Asset Catalog.bat**, review its report, and refresh `index.html`. The updater uses an existing Node.js developer installation with no npm packages. The game itself remains offline and opens by double-clicking `index.html` without Node or a build.
+
+Use the browser to search, inspect valid/quarantined/unused/broken assets, preview pixels and create animation definitions. Tune each frame's duration/order, then explicitly select Idle/Attack/optional Dodge for a faction/race/class profile. Terrain definitions independently select Background and Floor; the Battle Map editor also opens the terrain under its cursor. Filename inference does not assign gameplay content.
+
+Save Working Copy and export a portable full JSON backup. Incomplete references remain editable; **CHECK SHIPPING READINESS** probes current referenced PNGs independently of previews and identifies required repairs. Shipping exports repeat the check; required missing/unverified images block publication, while optional Dodge/Floor/effect fallbacks remain allowed. Keep external PNGs and the regenerated catalog with the project. Current combat still uses placeholder scenes; Stage 2/3 renderer/sequencer/combat integration is not included.
+
+See [asset naming/dimensions](assets/README.md#battle-scene-production-assets-stage-1) and the [Stage-1 implementation and manual acceptance report](docs/BATTLE-SCENE-ASSETS-STAGE1.md). Verification adds `node tools/test-asset-catalog.cjs` and `node tools/verify-scene-assets.cjs PATH_TO_EXISTING_CANVAS_PACKAGE` to the existing checks. The foundation suite now contains 950 checks. See the [manual acceptance corrections report](docs/STAGE1-MANUAL-ACCEPTANCE-CORRECTIONS.md) for the follow-up fixes and remaining real-Brave tests. `node tools/verify-asset-acceptance.cjs PATH_TO_EXISTING_CANVAS_PACKAGE` additionally exercises physical temporary PNG loss/recovery, publication and SVG palette output.
+
+**Display palettes:** logical Select cycles Canonical, Game Boy / Tunable, Blue, Red, Purple, Amber, Grayscale and Dark when no contextual Select action owns it. You can also choose **Options / Controls → Display Palette**. While editing this field, navigation previews both the framebuffer and its companion page background; Accept saves, Cancel restores the prior palette. The choice is a separate browser preference. The four-color filter affects only game-screen output; the outer background changes through a separate CSS property, and source PNGs stay canonical. Earlier alternate framebuffer colors remain provisional, including Game Boy values intended for hardware comparison. Dark reverses Grayscale; its four outputs and all companion backgrounds are established owner values in `js/config/displayPalettes.js`. See the [post-acceptance report and required Brave retest](docs/STAGE1-POST-ACCEPTANCE-FOLLOW-UP.md).

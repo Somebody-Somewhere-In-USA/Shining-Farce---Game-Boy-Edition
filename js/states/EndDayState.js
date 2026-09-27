@@ -28,6 +28,7 @@
       }
       return new G.ui.SelectableList(items, 4);
     }
+    displayPaletteSelectAllowed(){return !this.inspect&&!this.error&&!this.campaign.state.resolution?.pendingBattleScenario;}
     update(deltaMs = 0) {
       const c = this.campaign, action = this.input.consumeAction();
       if (this.error) { if (action === "cancel" || action === "confirm") this.error = null; return; }

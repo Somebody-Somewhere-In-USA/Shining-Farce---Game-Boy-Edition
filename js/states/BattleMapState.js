@@ -38,6 +38,7 @@
    }
    candidates.push({command:"END TURN"});const choice=G.systems.AISystem.choose(s,candidates,this.map.testOnly?G.data.BattleFoundationFixture.choose:this.rules?.ai);V.assert(choice.status==="READY",choice.status);const a=choice.action;if(a.command==="ATTACK")this.controller.action(id,"ATTACK",a.targetId,this.map.testOnly?G.data.BattleFoundationFixture.attack:this.rules?.attack);if(a.command==="MOVE"){this.controller.move(id,a.destination);this.cursor={...a.destination};}if(a.command==="MAGIC")this.controller.cast(id,a.spellId,a.method||null,a.target);if(a.command==="ROUTE")this.controller.route(id,a.destination);if(a.command==="END TURN")this.selectControlled(this.controller.endTurn());
   }
+  displayPaletteSelectAllowed(){return this.mode==="map"&&!this.battle.state.events.waiting&&(this.controller.busy||this.controller.forecast().length<=19);}
   update(ms=0){const input=this.input.consumeAction();try{this.controller.update(ms);const s=this.battle.state;if(s.events.waiting){if(this.mode!=="list")this.counterChoice();}else if(this.controller.busy)return;
     if(s.presentation.phase==="MAP_RETURN")return;if(s.presentation.phase==="BANNER"){if(input==="confirm"||input==="cancel")this.onReturn();return;}
     if(this.mode==="error"){if(input)this.mode=s.events.waiting?"map":"map";return;}

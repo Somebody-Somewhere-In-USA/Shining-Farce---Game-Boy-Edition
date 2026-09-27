@@ -4,19 +4,19 @@
     constructor(canvas, statusElement) {
       this.canvas = canvas; this.statusElement = statusElement;
       this.assets = new G.core.Assets(G.data.ASSET_MANIFEST);
-      this.input = new G.core.Input(); this.states = new G.core.GameStateManager();
+      this.input = new G.core.Input(); this.displayPalette=new G.rendering.DisplayPalette(this.input.store); this.states = new G.core.GameStateManager();
       this.lastTime = 0; this.loop = this.loop.bind(this);
     }
     async start() {
-      document.documentElement.style.setProperty("--clear-color", G.config.PALETTE.background);
       this.renderer = new G.rendering.Renderer(this.canvas, this.assets);
+      this.displayPalette.attach(this.renderer.canvas);
       await this.assets.loadAll();
       this.text = new G.rendering.PixelTextRenderer(this.assets);
       this.ui = new G.rendering.CampaignUIRenderer(this.assets, this.text);
       this.resetCurrent();
       this.developer = new G.editor.DeveloperShell(this);
       this.input.start(); this.canvas.focus();
-      this.statusElement.textContent = "Ready. Arrows move the map cursor, Enter selects, Q cycles squads, M opens the campaign menu.";
+      this.statusElement.textContent = "Ready. Arrows move the map cursor, Enter selects, Select changes display palette (or cycles stacked squads), M opens the campaign menu.";
       this.running = true; requestAnimationFrame(this.loop);
     }
     resetCurrent(){
@@ -47,10 +47,11 @@
       // This isolated legacy movement test has no access to campaign simulation.
       this.states.change(tactical);
     }
+    handleDisplaySelect(){if(this.input.queue[0]!=="select"||this.input.textHandler||this.input.capture||this.developer?.overlay||this.developer?.terminal||!this.states.current?.displayPaletteSelectAllowed?.())return false;this.input.consumeAction();const palette=this.displayPalette.cycle();this.statusElement.textContent=this.displayPalette.notice||("DISPLAY PALETTE: "+palette.name);return true;}
     loop(time) {
       if (!this.running) return;
       const deltaMs = this.lastTime ? Math.min(time - this.lastTime, 100) : 0;
-      this.lastTime = time; this.input.pollGamepads(deltaMs); const overlay=this.developer.update(deltaMs); if(!overlay)this.states.update(deltaMs); if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();
+      this.lastTime = time; this.input.pollGamepads(deltaMs); const overlay=this.developer.update(deltaMs); if(!overlay){this.handleDisplaySelect();this.states.update(deltaMs);} if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();
       requestAnimationFrame(this.loop);
     }
   }

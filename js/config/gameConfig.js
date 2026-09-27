@@ -5,7 +5,10 @@
   G.config.INTERNAL_HEIGHT = 360;
   G.config.WORLD_TILE_SIZE = 16;
   G.config.MAP_VIEW = Object.freeze({ x: 0, y: 16, width: 480, height: 312 });
-  G.config.UI = Object.freeze({ pageRows: 18, pageColumns: 50, listRows: 12 });
+  const listTop=26,listRowHeight=12,listFooterBottom=18,listBlankRows=1;
+  const listFooterY=G.config.INTERNAL_HEIGHT-listFooterBottom;
+  G.config.UI = Object.freeze({ pageRows: 18, pageColumns: 50, listTop,listRowHeight,listFooterBottom,listFooterY,listBlankRows,
+    listRows:Math.max(1,Math.floor((listFooterY-listTop)/listRowHeight)-listBlankRows) });
   G.config.TILE_SIZE = 16;
 
   G.config.GAME_STATES = Object.freeze({

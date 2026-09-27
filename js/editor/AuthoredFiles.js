@@ -37,7 +37,7 @@
   }else data=input;
   doc.validate(data);return{base:doc.data,data:V.freeze(V.clone(data)),kind,conflicts};
  }
- function ready(doc){doc.validate(doc.data);for(const map of Object.values(doc.data.battleMaps)){const r=G.editor.BattleMapAuthoring.validate(map);V.assert(r.valid,map.id+": "+r.errors.join("; "));}G.editor.AuthoredContent.campaign(doc.data);return true;}
+ function ready(doc,{presentation=true}={}){doc.validate(doc.data);if(presentation){const r=G.editor.BattleSceneAssets.readiness(doc.data,{availability:true});V.assert(r.valid,"Battle Scene readiness: "+r.errors.join("; "));}for(const map of Object.values(doc.data.battleMaps)){const r=G.editor.BattleMapAuthoring.validate(map);V.assert(r.valid,map.id+": "+r.errors.join("; "));}G.editor.AuthoredContent.campaign(doc.data);return true;}
  // IDs are ASCII. Escape uppercase and underscores so distinct IDs cannot collide on Windows.
  function battlePath(id){V.assert(V.validId(id),"invalid Battle Map ID");return"js/data/maps/battle/battle-"+id.replace(/[A-Z_]/g,c=>"_"+c.charCodeAt(0).toString(16))+".js";}
  function script(method,data){return"// Generated shipping data. Import the JSON backup into the editor; do not import JavaScript.\nwindow.GBTRPG.data.AUTHORED_MAPS."+method+"(JSON.parse("+JSON.stringify(json(data))+"));\n";}
