@@ -5,7 +5,8 @@
  let nextFilter=0;
  class DisplayPalette {
   constructor(store=new G.core.LocalStore()){
-   this.store=store;const saved=store.read('display.v1');this.id=palettes.some(p=>p.id===saved?.palette)&&[1,2].includes(saved?.version)?saved.palette:'canonical';this.committedId=this.id;this.presentationSize=saved?.version===2&&G.config.PRESENTATION_MODES.some(m=>m.id===saved.presentationMode)?saved.presentationMode:saved?.version===1?({1:2,2:4,3:5}[saved.presentationSize]||5):5;this.listeners=new Set();this.notice=null;
+   this.store=store;const saved=store.read('display.v1');this.id=palettes.some(p=>p.id===saved?.palette)&&[1,2,3].includes(saved?.version)?saved.palette:'canonical';this.committedId=this.id;this.presentationSize=saved?.version===3&&[1,2,3].includes(saved.presentationMode)?saved.presentationMode:saved?.version===2?({1:1,2:1,3:1,4:2,5:3}[saved.presentationMode]||3):saved?.version===1&&[1,2,3].includes(saved.presentationSize)?saved.presentationSize:3;this.listeners=new Set();this.notice=null;
+   if(saved&&([1,2].includes(saved.version)||saved.version===3&&saved.presentationMode!==this.presentationSize))this.save();
   }
   get selected(){return palettes.find(p=>p.id===this.id);}
   // Solve an affine RGB mapping through all four canonical colors. The matrix
@@ -32,8 +33,8 @@
   preview(id){if(!palettes.some(p=>p.id===id))throw Error('Unknown display palette');const changed=id!==this.id;this.id=id;this.apply();if(changed)for(const listener of this.listeners)listener({paletteChanged:true});}
   choose(id){this.preview(id);this.committedId=id;return this.save();}
   chooseSize(size){if(!G.config.PRESENTATION_MODES.some(m=>m.id===size))throw Error('Unknown presentation size');const changed=size!==this.presentationSize;this.presentationSize=size;if(changed)for(const listener of this.listeners)listener({sizeChanged:true});return this.save();}
-  cycleSize(){this.chooseSize(this.presentationSize%5+1);return this.presentationSize;}
-  save(){const saved=this.store.write('display.v1',{version:2,palette:this.committedId,presentationMode:this.presentationSize});this.notice=saved?null:'DISPLAY ACTIVE / PREFERENCE NOT SAVED: '+this.store.error;return saved;}
+  cycleSize(){this.chooseSize(this.presentationSize%3+1);return this.presentationSize;}
+  save(){const saved=this.store.write('display.v1',{version:3,palette:this.committedId,presentationMode:this.presentationSize});this.notice=saved?null:'DISPLAY ACTIVE / PREFERENCE NOT SAVED: '+this.store.error;return saved;}
   cycle(){this.choose(palettes[(palettes.findIndex(p=>p.id===this.id)+1)%palettes.length].id);return this.selected;}
  }
  G.rendering.DisplayPalette=DisplayPalette;

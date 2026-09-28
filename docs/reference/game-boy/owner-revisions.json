@@ -3,5 +3,15 @@
     "path": "assets/presentation/game-boy/size-1/select-button-pressed.png",
     "sha256": "4d71a3dbe9fd9901ccdd43b2e03a4ef35c63280dbb9f073d8492bcaa691cd553",
     "provenance": "Owner confirmed manual artwork change during five-mode implementation on 2026-09-27; preserve this revision. Original ZIP hash remains in source-manifest.json."
+  },
+  {
+    "path": "assets/presentation/game-boy/size-2/below-screen.png",
+    "sha256": "082ac63da8b5f2ec974c0e903e79c915874d7cde0d95a134841b1a9df0504999",
+    "provenance": "Already present in the clean starting HEAD 6d26074 of the power/boot task; preserved unchanged. Original ZIP hash remains in source-manifest.json."
+  },
+  {
+    "path": "assets/presentation/game-boy/size-2/d-pad.png",
+    "sha256": "02a41f0d138d61069e53cd728d4df9ff0183e9bf5a82179e7ae7072740b7e997",
+    "provenance": "Already present in the clean starting HEAD 6d26074 of the power/boot task; preserved unchanged. Original ZIP hash remains in source-manifest.json."
   }
 ]

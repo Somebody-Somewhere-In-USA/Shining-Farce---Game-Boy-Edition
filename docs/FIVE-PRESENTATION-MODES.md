@@ -1,5 +1,7 @@
 # Five presentation modes and responsive frameless — implementation report
 
+Historical comparison report. The owner subsequently selected 300×225 Smooth; the [power/boot cleanup](POWER-BOOT-IMPLEMENTATION.md) supersedes these five modes, preference version and deferred power behavior. Original verification follows.
+
 2026-09-27. Implementation and automated checks complete. New five-mode visual acceptance in Windows/Brave/file:// is pending owner testing; the preceding shell and its controls were already accepted by the owner.
 
 ## Baseline and evidence

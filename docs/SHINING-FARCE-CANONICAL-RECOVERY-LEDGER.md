@@ -998,3 +998,15 @@ Logical remappable `presentation` defaults to H and cycles 1→2→3→1; size p
 Authority: owner **Five Presentation Modes + Responsive Frameless Restoration** prompt. Owner confirms the preceding shell/controls work in real Windows/Brave/file-URL use. Small 300×225 crisp survives as Mode 2; new comparison Modes 1 (240×180 crisp, integer inset and #726f73 backing) and 3 (300×225 smooth) have no preferred status. Large becomes Mode 4; responsive frameless becomes default Mode 5. Logical framebuffer stays 480×360. Old stored sizes map 1→2, 2→4, 3→5; new display record v2 distinguishes those meanings. Input action `presentation`/H is unchanged.
 
 Repository evidence at HEAD 14afe2c shows prior responsive pixelated integer scaling with a 1× minimum; the explicit new viewport-fit requirement supersedes that clamp while preserving pixelated treatment and resize lifecycle. Only frameless responds to viewport size. Native art, palette boundaries, wheel behavior and authored schemas stay intact. Owner also confirms the current small Select-Pressed PNG was manually changed; preserve it, with separate revision provenance. Canonical §5 and §29 now describe the five-mode rules. New visual acceptance is pending; see [five-mode report](FIVE-PRESENTATION-MODES.md).
+
+
+## 2026-09-27 — Preferred Small Smooth, three-mode cleanup and shell power/boot
+
+Authority: owner **Presentation Mode Cleanup + Game Boy Power / Boot Sequence** prompt, following real-browser comparison. Small 300×225 Smooth is now preferred/selected; 240 Crisp and 300 Crisp are removed from ordinary choices. Current IDs: 1 Small Smooth, 2 Large, 3 Responsive Frameless/default. Record v3 migrates old small experiments→1, large→2, frameless→3 and persists normalization. Logical 480×360 and authored schemas remain unchanged.
+
+Power Off now freezes the in-memory game/audio immediately while Top/Battery switch Off and 360 shuffled rows disappear over ~1 second. A physical switch click from Off runs the exact supplied SEGA sequence; saved-shell startup begins Off without a game flash and runs the same boot, while frameless startup skips it. Logo frames remain canonical game-canvas content and receive palette mapping. Controls stay blocked and held inputs require release. Ordinary mode switching does not boot. Chant uses actual ended or a bounded duration fallback if blocked. This explicitly supersedes prior Power Off deferral. The repository had no gameplay audio engine; no new gameplay music is invented. [Report](POWER-BOOT-IMPLEMENTATION.md) records timing, limitations and pending real Brave/audio acceptance.
+
+
+## Boot timing follow-up — first 25 frames
+
+After confirming the power/boot feature works, the owner requested trying SEGA Logo frames 1–25 at **50 ms each**, superseding their initial 100 ms duration. This first animation now lasts 1250 ms; the chant cue moves to 3550 ms after boot begins. Frames 26–28, reverse frames, blanks, post-audio hold and audio behavior are unchanged.

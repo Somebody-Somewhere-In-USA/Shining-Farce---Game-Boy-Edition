@@ -14,25 +14,27 @@ Direct `file://` execution remains the runtime target. Classic scripts register 
 
 ## Visual platform
 
-The logical framebuffer is always **480×360**. Press **H** (remappable Cycle Presentation Size) to cycle these five modes:
+The logical framebuffer is always **480×360**. Press **H** (remappable Cycle Presentation Size) to cycle:
 
 | Mode | Presentation |
 | --- | --- |
-| 1 | Small GB — 240×180 Crisp, centered with #726f73 backing |
-| 2 | Small GB — 300×225 Crisp |
-| 3 | Small GB — 300×225 Smooth |
-| 4 | Large GB — 480×360 |
-| 5 | Frameless — Responsive, default |
+| 1 | Small Game Boy — 300×225 Smooth |
+| 2 | Large Game Boy — 480×360 |
+| 3 | Frameless — Responsive, default |
 
-Modes 1–3 keep the native 600×975 small shell; mode 4 keeps the 780×1105 large shell. Those shells do not shrink with the browser and may require scrolling. Mode 5 fits the complete 4:3 game to the window and updates on resize, retaining pixelated sampling. Options / Controls offers descriptive Presentation Mode choices. Saved old small/large/frameless settings migrate to modes 2/4/5. Modes 1 and 3 are comparison alternatives; neither is declared preferred.
+Small uses the owner's selected smooth rendering inside the native 600×975 shell; large remains 780×1105. Shells retain native size and may require page scrolling. Frameless fits the complete 4:3 game to the browser and updates on resize. Options / Controls exposes the three descriptive choices. Old experimental small modes migrate to Small Smooth; large/frameless retain their meanings. The two crisp small comparison modes and unused-screen backing are removed.
 
-The exactly four authorized source game shades remain #9BBC0F, #8BAC0F, #306230 and #0F380F. Hardware colors and the separate Mode-1 #726f73 backing stay outside the game-canvas palette filter. The page retains its palette companion background.
+The four source game shades remain #9BBC0F, #8BAC0F, #306230 and #0F380F. Hardware stays outside the game-canvas palette filter; page companion backgrounds remain separate.
 
 The strategic grid uses native **16×16** units. A 1024×640 world scrolls behind a 480×312 map area with a 16px header and 32px footer. Capitals use 32px icons; bitmap text keeps its 6px advance and 8px cell. Twenty-two external PNGs supply terrain, squads, markers, cursors, text, windows and tactical placeholders. See [assets/README.md](assets/README.md) for replacement paths. There are no browser fonts in the framebuffer.
 
-Shining Farce is Game Boy-inspired rather than hardware-emulated. Terminal, developer menus, and map editors use the same four source colors and fixed framebuffer. The shell observes held logical controls: Accept → A, Cancel → B, Select → Select, Start/Menu → Start, and the shared resolved direction → D-Pad. Most recently pressed held direction wins, falling back on release. Top and Battery stay On. Active palette changes, including Options preview/Cancel, animate the contrast wheel three times at 200 ms per state; new changes restart it. Mode 5 accumulates no hidden animation. Power Off is deferred.
+Shining Farce is Game Boy-inspired rather than hardware-emulated. The shell follows held logical controls: Accept→A, Cancel→B, Select→Select, Start/Menu→Start and resolved direction→D-Pad. Active palette changes still animate the contrast wheel with restart semantics.
 
-All 46 built-in shell component PNGs under `assets/presentation/game-boy/` must accompany the complete project, together with its updated scripts. No Asset Catalog update is needed for them; the authored-data shipping ZIP does not bundle these runtime files. See the [five-mode implementation report and Brave acceptance steps](docs/FIVE-PRESENTATION-MODES.md).
+Click the **small gray Power switch at the very top of the shell** to power off. Top/Battery immediately switch Off, the screen dissolves by horizontal rows for about a second, and the running game stays paused in memory. Click again to play the full SEGA boot and resume at the same place. Controls are disabled during boot/Off; release held keys/buttons before resuming. Switching presentation modes while playing does not itself boot or reset the game.
+
+Reopening `index.html` with a saved shell mode starts Off, then runs boot before showing the game. Frameless opens normally. The logo uses the selected framebuffer palette; blank phases use its background shade, not the page companion color. Chant playback is attempted once at the proper cue. If Brave blocks it, a bounded silent timing fallback lets the sequence finish; do not disable browser protections. Actual browser audio acceptance remains for owner testing. There is no existing gameplay music in this build; the new audio pause/resume interface is ready for registered gameplay media.
+
+Distribute the complete folder, including all 46 shell PNGs and `assets/presentation/boot/` (28 logo PNGs plus the MP3). No Asset Catalog update is needed for these fixed resources, and authored-data export does not embed them. See the [power/boot implementation report and Brave acceptance steps](docs/POWER-BOOT-IMPLEMENTATION.md).
 
 ## Developer tools and authoring — Prompt #8
 
@@ -108,7 +110,7 @@ See [PROMPT8A-IMPLEMENTATION.md](docs/PROMPT8A-IMPLEMENTATION.md) for deployment
 | Arrows / WASD | Move the cursor; navigate menus and pages |
 | Z / Enter / Space | Select / confirm |
 | Q / logical Select | Cycle display palettes in ordinary gameplay; stacked squads, long battle forecasts and editor/menu functions take precedence |
-| H / Cycle Presentation Size | Cycle 1 → 2 → 3 → 4 → 5 → 1; remappable in Options / Controls |
+| H / Cycle Presentation Size | Cycle 1 → 2 → 3 → 1; remappable in Options / Controls |
 | X / Escape / Backspace | Back / cancel an uncommitted preview |
 | M / Tab or P | Campaign menu; M inspects End Day resolution |
 | Backtick (`) | Toggle Terminal; Enter runs typed commands |

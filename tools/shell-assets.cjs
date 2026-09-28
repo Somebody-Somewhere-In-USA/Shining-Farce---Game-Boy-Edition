@@ -8,6 +8,6 @@ function inspect(root){
   const bytes=fs.readFileSync(path.join(root,file));assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a',file);
   assert.equal(bytes.readUInt32BE(16),c.width,file);assert.equal(bytes.readUInt32BE(20),c.height,file);paths.add(file);
  }
- assert.equal(paths.size,46);return{shells,paths,modes:context.window.GBTRPG.config.PRESENTATION_MODES};
+ assert.equal(paths.size,46);const boot=require('./boot-assets.cjs').inspect(root,context.window.GBTRPG.config.BOOT);return{shells,paths,modes:context.window.GBTRPG.config.PRESENTATION_MODES,boot};
 }
 module.exports={inspect};

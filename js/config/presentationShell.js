@@ -283,10 +283,10 @@
 };
 // Shell IDs remain asset identities; mode IDs independently select geometry/sampling.
  G.config.PRESENTATION_MODES=[
-  {id:1,label:'SMALL GB - 240x180 CRISP',shell:1,screen:{x:215,y:177,width:240,height:180},sampling:'pixelated',backing:'#726f73'},
-  {id:2,label:'SMALL GB - 300x225 CRISP',shell:1,screen:{x:185,y:155,width:300,height:225},sampling:'pixelated'},
-  {id:3,label:'SMALL GB - 300x225 SMOOTH',shell:1,screen:{x:185,y:155,width:300,height:225},sampling:'auto'},
-  {id:4,label:'LARGE GB - 480x360',shell:2,screen:{x:185,y:155,width:480,height:360},sampling:'pixelated'},
-  {id:5,label:'FRAMELESS - RESPONSIVE',shell:null,sampling:'pixelated'}
+  {id:1,label:'SMALL GB - 300x225 SMOOTH',shell:1,screen:{x:185,y:155,width:300,height:225},sampling:'auto'},
+  {id:2,label:'LARGE GB - 480x360',shell:2,screen:{x:185,y:155,width:480,height:360},sampling:'pixelated'},
+  {id:3,label:'FRAMELESS - RESPONSIVE',shell:null,sampling:'pixelated'}
  ];
+ G.config.POWER_SWITCH={x:60,y:0,width:75,height:20};
+ G.config.BOOT={frames:Object.fromEntries(Array.from({length:28},(_,i)=>[i+1,'assets/presentation/boot/sega-logo-'+(i+1)+'.png'])),audio:'assets/presentation/boot/sega-chant-game-boy.mp3',audioFallbackMs:1920};
 }(window.GBTRPG));

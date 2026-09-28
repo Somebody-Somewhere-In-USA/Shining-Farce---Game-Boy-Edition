@@ -11,13 +11,14 @@
       this.renderer = new G.rendering.Renderer(this.canvas, this.assets);
       this.displayPalette.attach(this.renderer.canvas);
       this.presentation=new G.rendering.PresentationShell(this.renderer,this.displayPalette,this.input);
-      await Promise.all([this.assets.loadAll(),this.presentation.loadAll()]);
+      this.gameAudio=new G.core.GameAudio();this.power=new G.rendering.PowerPresentation(this);this.power.prepareStartup();
+      await Promise.all([this.assets.loadAll(),this.presentation.loadAll(),this.power.loadAll()]);
       this.text = new G.rendering.PixelTextRenderer(this.assets);
       this.ui = new G.rendering.CampaignUIRenderer(this.assets, this.text);
       this.resetCurrent();
       this.developer = new G.editor.DeveloperShell(this);
-      this.input.start(); this.canvas.focus();
-      this.statusElement.textContent = "Ready. Arrows move the map cursor, Enter selects, Select changes display palette (or cycles stacked squads), M opens the campaign menu. H cycles presentation size (remappable).";
+      this.input.start(); this.canvas.focus();this.power.startInitial();
+      this.statusElement.textContent = this.displayPalette.notice || "Ready. Arrows move the map cursor, Enter selects, Select changes display palette (or cycles stacked squads), M opens the campaign menu. H cycles presentation size (remappable).";
       this.running = true; requestAnimationFrame(this.loop);
     }
     resetCurrent(){
@@ -48,12 +49,17 @@
       // This isolated legacy movement test has no access to campaign simulation.
       this.states.change(tactical);
     }
-    handlePresentationSize(){if(this.input.queue[0]!=="presentation"||this.input.textHandler||this.input.capture||this.developer?.terminal)return false;this.input.consumeAction();const size=this.displayPalette.cycleSize();this.statusElement.textContent=this.displayPalette.notice||("PRESENTATION: "+G.config.PRESENTATION_MODES.find(m=>m.id===size).label);return true;}
-    handleDisplaySelect(){if(this.input.queue[0]!=="select"||this.input.textHandler||this.input.capture||this.developer?.overlay||this.developer?.terminal||!this.states.current?.displayPaletteSelectAllowed?.())return false;this.input.consumeAction();const palette=this.displayPalette.cycle();this.statusElement.textContent=this.displayPalette.notice||("DISPLAY PALETTE: "+palette.name);return true;}
+    handlePresentationSize(){if(this.power?.blocked)return false;if(this.input.queue[0]!=="presentation"||this.input.textHandler||this.input.capture||this.developer?.terminal)return false;this.input.consumeAction();const size=this.displayPalette.cycleSize();this.statusElement.textContent=this.displayPalette.notice||("PRESENTATION: "+G.config.PRESENTATION_MODES.find(m=>m.id===size).label);return true;}
+    handleDisplaySelect(){if(this.power?.blocked)return false;if(this.input.queue[0]!=="select"||this.input.textHandler||this.input.capture||this.developer?.overlay||this.developer?.terminal||!this.states.current?.displayPaletteSelectAllowed?.())return false;this.input.consumeAction();const palette=this.displayPalette.cycle();this.statusElement.textContent=this.displayPalette.notice||("DISPLAY PALETTE: "+palette.name);return true;}
+    step(deltaMs,elapsed=deltaMs){
+      this.input.pollGamepads(deltaMs); this.presentation?.update(elapsed);
+      if(this.power?.blocked){try{this.power.update(elapsed);if(this.power.blocked)this.power.render();else if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();}catch(error){this.power.abort(error);}return;}
+      this.handlePresentationSize(); const overlay=this.developer.update(deltaMs); if(!overlay){this.handleDisplaySelect();this.states.update(deltaMs);} if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();
+    }
     loop(time) {
       if (!this.running) return;
       const elapsed=this.lastTime?Math.max(0,time-this.lastTime):0,deltaMs=Math.min(elapsed,100);
-      this.lastTime = time; this.input.pollGamepads(deltaMs); this.presentation?.update(elapsed); this.handlePresentationSize(); const overlay=this.developer.update(deltaMs); if(!overlay){this.handleDisplaySelect();this.states.update(deltaMs);} if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();
+      this.lastTime=time;this.step(deltaMs,elapsed);
       requestAnimationFrame(this.loop);
     }
   }

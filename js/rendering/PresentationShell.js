@@ -5,27 +5,28 @@
  class PresentationShell {
   static get manifest(){return manifest;}
   constructor(renderer,display,input,dom=window.document){
-   Object.assign(this,{renderer,display,input});this.canvas=renderer.canvas;this.size=display.presentationSize;this.wheelElapsed=null;this.nodes=new Map();this.assets=new G.core.Assets(manifest);
+   Object.assign(this,{renderer,display,input});this.canvas=renderer.canvas;this.size=display.presentationSize;this.powered=true;this.wheelElapsed=null;this.nodes=new Map();this.assets=new G.core.Assets(manifest);
    if(dom?.createElement&&this.canvas.parentNode){
     this.root=dom.createElement('div');this.root.id='game-presentation';this.canvas.parentNode.insertBefore(this.root,this.canvas);
-    this.art=dom.createElement('div');this.art.className='game-boy-art';this.art.setAttribute('aria-hidden','true');this.root.appendChild(this.art);this.backing=dom.createElement('div');this.backing.className='game-boy-screen-backing';this.backing.setAttribute('aria-hidden','true');this.root.appendChild(this.backing);this.root.appendChild(this.canvas);
+    this.art=dom.createElement('div');this.art.className='game-boy-art';this.art.setAttribute('aria-hidden','true');this.root.appendChild(this.art);this.powerButton=dom.createElement('button');this.powerButton.className='game-boy-power';this.powerButton.type='button';this.powerButton.tabIndex=-1;this.powerButton.setAttribute('aria-label','Game Boy power switch');this.powerButton.onclick=event=>{event.preventDefault();this.onPower?.();this.canvas.focus?.();};Object.assign(this.powerButton.style,{left:G.config.POWER_SWITCH.x+'px',top:G.config.POWER_SWITCH.y+'px',width:G.config.POWER_SWITCH.width+'px',height:G.config.POWER_SWITCH.height+'px'});this.root.appendChild(this.powerButton);this.root.appendChild(this.canvas);
     for(const c of shells[1].components){const node=dom.createElement('img');node.alt='';node.draggable=false;node.dataset.slot=c.id;this.art.appendChild(node);this.nodes.set(c.id,node);}
    }
-   this.renderer.onDisplayResize=(width,height)=>{if(this.size===5&&this.root){this.root.style.width=width+'px';this.root.style.height=height+'px';}};
-   this.unsubscribe=display.subscribe(change=>{if(change.sizeChanged)this.setSize(display.presentationSize);if(change.paletteChanged){this.wheelElapsed=this.size===5?null:0;this.render();}});
+   this.renderer.onDisplayResize=(width,height)=>{if(this.size===3&&this.root){this.root.style.width=width+'px';this.root.style.height=height+'px';}};
+   this.unsubscribe=display.subscribe(change=>{if(change.sizeChanged)this.setSize(display.presentationSize);if(change.paletteChanged){this.wheelElapsed=this.size===3?null:0;this.render();}});
    this.setSize(this.size);
   }
   async loadAll(){await this.assets.loadAll();for(const [size,shell]of Object.entries(shells))for(const c of shell.components)for(const state of ['normal',...Object.keys(c.states)]){const image=this.assets.getImage(size+':'+c.id+':'+state);if(image.width!==c.width||image.height!==c.height)throw Error('Shell component dimensions differ: '+size+'/'+c.id+'/'+state);}}
   setSize(size){
    const mode=G.config.PRESENTATION_MODES.find(m=>m.id===size);if(!mode)throw Error('Unknown presentation mode');
-   if(size===5||this.size===5)this.wheelElapsed=null;this.size=size;this.mode=mode;const shell=shells[mode.shell],screen=mode.screen||{x:0,y:0};
+   if(size===3||this.size===3)this.wheelElapsed=null;this.size=size;this.mode=mode;const shell=shells[mode.shell],screen=mode.screen||{x:0,y:0};
    this.canvas.style.imageRendering=mode.sampling;this.canvas.style.left=screen.x+'px';this.canvas.style.top=screen.y+'px';
-   if(this.root){this.art.hidden=!shell;this.backing.hidden=!mode.backing;if(shell){this.root.style.width=shell.width+'px';this.root.style.height=shell.height+'px';}if(mode.backing)Object.assign(this.backing.style,{left:shell.screen.x+'px',top:shell.screen.y+'px',width:shell.screen.width+'px',height:shell.screen.height+'px',backgroundColor:mode.backing});}
+   if(this.root){this.art.hidden=!shell;this.powerButton.hidden=!shell;if(shell){this.root.style.width=shell.width+'px';this.root.style.height=shell.height+'px';}}
    if(shell)this.renderer.setDisplaySize(screen.width,screen.height);else this.renderer.setResponsiveDisplay();
    this.render();
   }
+  setPower(powered,transition=false){this.powered=powered;if(this.powerButton){this.powerButton.disabled=transition;this.powerButton.setAttribute('aria-label',powered?'Power off Game Boy':'Power on Game Boy');}this.render();}
   stateFor(id){
-   if(id==='top'||id==='battery')return'on';
+   if(id==='top'||id==='battery')return this.powered?'on':'normal';
    if(id==='contrast-wheel')return this.wheelElapsed!==null&&Math.floor(this.wheelElapsed/200)%2===1?'scroll':'normal';
    if(id==='d-pad')return this.input.activeDirection||'normal';
    const actions={'a-button':['confirm'],'b-button':['cancel'],'select-button':['select'],'start-button':['start','menu']}[id];
