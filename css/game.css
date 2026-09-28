@@ -1,6 +1,14 @@
 * { box-sizing: border-box; }
 html, body { width: 100%; min-height: 100%; margin: 0; }
-body { min-height: 100vh; display: grid; place-items: center; background: var(--clear-color); }
+body { min-height: 100vh; display: flex; background: var(--clear-color); }
 #game { display: block; image-rendering: pixelated; outline: none; }
 /* Only an accessibility live region. All visible game text is in the framebuffer. */
 .accessible-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+/* Native external hardware art; only #game receives the display-palette filter. */
+#game-presentation { position: relative; flex: none; margin: auto; }
+.game-boy-art { position: absolute; inset: 0; pointer-events: none; }
+.game-boy-art img { position: absolute; display: block; image-rendering: pixelated; }
+#game-presentation > #game { position: absolute; z-index: 1; image-rendering: pixelated; }
+
+.game-boy-screen-backing { position: absolute; pointer-events: none; }

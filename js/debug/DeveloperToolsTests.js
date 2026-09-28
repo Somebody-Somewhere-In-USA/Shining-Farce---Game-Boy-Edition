@@ -20,7 +20,7 @@
   test("REPEATED CONFIRM SUPPRESSED BUT DIRECTIONS REPEAT",()=>{const i=input();i.enqueueAction("confirm",{repeat:true});i.enqueueAction("left",{repeat:true});same(i.queue,["left"]);});
   test("STANDARD DPAD BUTTON NORMALIZATION",()=>{const i=input();i.pollGamepads(16,pad([12,0]));same(i.queue,["confirm","up"]);});
   test("NUMERIC GAMEPAD BUTTONS NORMALIZE",()=>{const i=input();i.pollGamepads(16,[{index:0,buttons:[1],axes:[]}]);same(i.queue,["confirm"]);});
-  test("LEFT STICK DEAD ZONE AND DIRECTIONS",()=>{const i=input();i.pollGamepads(16,pad([],[.3,-.4]));same(i.queue,[]);i.pollGamepads(16,pad([],[.7,-.8]));same(i.queue,["right","up"]);});
+  test("LEFT STICK DEAD ZONE AND DIRECTIONS",()=>{const i=input();i.pollGamepads(16,pad([],[.3,-.4]));same(i.queue,[]);i.pollGamepads(16,pad([],[.7,-.8]));same(i.queue,["up"]);check(i.activeDirection==="up");});
   test("STICK AND DPAD SAME DIRECTION COALESCE",()=>{const i=input();i.pollGamepads(16,pad([12],[0,-1]));same(i.queue,["up"]);});
   test("CONTROLLER HELD REPEAT AND RELEASE",()=>{const i=input();i.pollGamepads(1,pad([0,12]));i.clear();i.pollGamepads(349,pad([0,12]));same(i.queue,[]);i.pollGamepads(1,pad([0,12]));same(i.queue,["up"]);i.pollGamepads(1,[]);i.clear();i.pollGamepads(1,pad([0]));same(i.queue,["confirm"]);});
   test("UNMAPPED NONSTANDARD CONTROLLER IGNORED",()=>{const i=input(),p=pad([0]);p[0].mapping="vendor";i.pollGamepads(16,p);same(i.queue,[]);});
@@ -32,8 +32,8 @@
   test("RESTORE DEFAULTS PERSISTS",()=>{const i=input();i.remap("keyboard","confirm","KeyC");check(i.restoreDefaults());same(new I(null,i.store).profile,I.defaults());});
   test("INVALID SAVED PROFILE FALLS BACK",()=>{const store=new G.core.LocalStore("test.",storage());store.write("controls.v1",{version:7});const i=new I(null,store);same(i.profile,I.defaults());check(i.notice);});
   test("REQUIRED CONTROLS AND DUPLICATES REJECTED",()=>{const p=I.defaults();p.keyboard.confirm=[];reject(()=>I.validate(p));p.keyboard.confirm=["KeyW"];reject(()=>I.validate(p));});
-  test("CONTROL SAVE DOES NOT TOUCH CAMPAIGN SAVE",()=>{const s=storage(),store=new G.core.LocalStore("test.",s);s.values["test.campaign"]="KEEP";new I(null,store).remap("keyboard","menu","KeyH");check(s.values["test.campaign"]==="KEEP"&&Object.keys(s.values).length===2);});
-  test("STORAGE DENIAL DOES NOT LOSE ACTIVE MAPPING",()=>{const i=new I(null,new G.core.LocalStore("x.",{getItem(){throw Error("denied");},setItem(){throw Error("quota");}}));check(i.remap("keyboard","menu","KeyH").saved===false);check(i.actionFor("keyboard","KeyH")==="menu"&&i.store.error==="quota");});
+  test("CONTROL SAVE DOES NOT TOUCH CAMPAIGN SAVE",()=>{const s=storage(),store=new G.core.LocalStore("test.",s);s.values["test.campaign"]="KEEP";new I(null,store).remap("keyboard","menu","KeyH",true);check(s.values["test.campaign"]==="KEEP"&&Object.keys(s.values).length===2);});
+  test("STORAGE DENIAL DOES NOT LOSE ACTIVE MAPPING",()=>{const i=new I(null,new G.core.LocalStore("x.",{getItem(){throw Error("denied");},setItem(){throw Error("quota");}}));check(i.remap("keyboard","menu","KeyH",true).saved===false);check(i.actionFor("keyboard","KeyH")==="menu"&&i.store.error==="quota");});
   test("TERMINAL TOGGLE CAPTURES TEXT AND EXECUTES",()=>{const h=host();act(h,"terminal");check(h.terminal);for(const k of "devmode")key(h.input,"Key"+k.toUpperCase(),k);key(h.input,"Enter");check(R.devmode&&h.history.at(-1)==="DEVMODE ENABLED");act(h,"terminal");check(!h.terminal&&!h.input.textHandler);});
   test("TERMINAL ENTER DOES NOT TRIGGER GAMEPLAY",()=>{const h=host();act(h,"terminal");key(h.input,"Enter");same(h.input.queue,[]);check(h.terminal);});
   for(const command of ["godmode","greedisgood","devmode"])test(command.toUpperCase()+" PARSE AND TOGGLE",()=>{check(R.execute("  "+command.toUpperCase()+" ")===command.toUpperCase()+" ENABLED");check(R.execute(command)===command.toUpperCase()+" DISABLED");});

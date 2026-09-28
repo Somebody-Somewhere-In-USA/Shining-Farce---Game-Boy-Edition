@@ -10,13 +10,14 @@
     async start() {
       this.renderer = new G.rendering.Renderer(this.canvas, this.assets);
       this.displayPalette.attach(this.renderer.canvas);
-      await this.assets.loadAll();
+      this.presentation=new G.rendering.PresentationShell(this.renderer,this.displayPalette,this.input);
+      await Promise.all([this.assets.loadAll(),this.presentation.loadAll()]);
       this.text = new G.rendering.PixelTextRenderer(this.assets);
       this.ui = new G.rendering.CampaignUIRenderer(this.assets, this.text);
       this.resetCurrent();
       this.developer = new G.editor.DeveloperShell(this);
       this.input.start(); this.canvas.focus();
-      this.statusElement.textContent = "Ready. Arrows move the map cursor, Enter selects, Select changes display palette (or cycles stacked squads), M opens the campaign menu.";
+      this.statusElement.textContent = "Ready. Arrows move the map cursor, Enter selects, Select changes display palette (or cycles stacked squads), M opens the campaign menu. H cycles presentation size (remappable).";
       this.running = true; requestAnimationFrame(this.loop);
     }
     resetCurrent(){
@@ -47,11 +48,12 @@
       // This isolated legacy movement test has no access to campaign simulation.
       this.states.change(tactical);
     }
+    handlePresentationSize(){if(this.input.queue[0]!=="presentation"||this.input.textHandler||this.input.capture||this.developer?.terminal)return false;this.input.consumeAction();const size=this.displayPalette.cycleSize();this.statusElement.textContent=this.displayPalette.notice||("PRESENTATION: "+G.config.PRESENTATION_MODES.find(m=>m.id===size).label);return true;}
     handleDisplaySelect(){if(this.input.queue[0]!=="select"||this.input.textHandler||this.input.capture||this.developer?.overlay||this.developer?.terminal||!this.states.current?.displayPaletteSelectAllowed?.())return false;this.input.consumeAction();const palette=this.displayPalette.cycle();this.statusElement.textContent=this.displayPalette.notice||("DISPLAY PALETTE: "+palette.name);return true;}
     loop(time) {
       if (!this.running) return;
-      const deltaMs = this.lastTime ? Math.min(time - this.lastTime, 100) : 0;
-      this.lastTime = time; this.input.pollGamepads(deltaMs); const overlay=this.developer.update(deltaMs); if(!overlay){this.handleDisplaySelect();this.states.update(deltaMs);} if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();
+      const elapsed=this.lastTime?Math.max(0,time-this.lastTime):0,deltaMs=Math.min(elapsed,100);
+      this.lastTime = time; this.input.pollGamepads(deltaMs); this.presentation?.update(elapsed); this.handlePresentationSize(); const overlay=this.developer.update(deltaMs); if(!overlay){this.handleDisplaySelect();this.states.update(deltaMs);} if(this.developer.overlay||this.developer.terminal)this.developer.render();else this.states.render();
       requestAnimationFrame(this.loop);
     }
   }

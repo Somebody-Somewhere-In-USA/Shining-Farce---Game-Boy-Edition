@@ -1,0 +1,338 @@
+[
+  {
+    "source": "Game Boy Frame/240x180/Alternates/A Button-Pressed - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/a-button-pressed.png",
+    "width": 115,
+    "height": 188,
+    "sha256": "dd50f78323d2226c77d83ef928e28031176cad4a01db6e98bfc0f8ff3f8c5f64"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/B Button-Pressed - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/b-button-pressed.png",
+    "width": 95,
+    "height": 188,
+    "sha256": "b7b592fad49be436068ee035d913b19ad9a5433432a484881f183871525ebb9c"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/Battery-On - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/battery-on.png",
+    "width": 110,
+    "height": 225,
+    "sha256": "a2a2bf4436273300dbf37245381799fa03d3ce2de273e47dc0fb2b6a809b39b4"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/Contrast Wheel-Scroll - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/contrast-wheel-scroll.png",
+    "width": 75,
+    "height": 225,
+    "sha256": "d25bd96a732d70af9566e60a7b9a4579c5cb0576c6e354642a988729581c82d9"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/D-Pad-Down - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/d-pad-down.png",
+    "width": 310,
+    "height": 188,
+    "sha256": "6da38573b19a76ebd0f775d30bb33d0da748e94d64c4a694d072c2fdf7baac8c"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/D-Pad-Left - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/d-pad-left.png",
+    "width": 310,
+    "height": 188,
+    "sha256": "3ea572df2c1a738bd7b3f0f3e431c6eac273c595c57735f27b2427fbb0856706"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/D-Pad-Right - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/d-pad-right.png",
+    "width": 310,
+    "height": 188,
+    "sha256": "b7f2ce2ed8dbe556b4fed796ef2c03f7522de4c14a864fc21e6ab0a9cff28cb2"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/D-Pad-Up - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/d-pad-up.png",
+    "width": 310,
+    "height": 188,
+    "sha256": "a112e6329cde2819fc0f53afebadd9aaf5711155e5059b861456cf7bd8a45467"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/Select Button-Pressed - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/select-button-pressed.png",
+    "width": 216,
+    "height": 141,
+    "sha256": "814fd46b7e8d22766c51646457725101608537f0289dbdc458e632bb3566162e"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/Start Button-Pressed - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/start-button-pressed.png",
+    "width": 110,
+    "height": 141,
+    "sha256": "06c4464d663e12a3106436599ea46031485b519fcb1ed6addf2673c79d77b48c"
+  },
+  {
+    "source": "Game Boy Frame/240x180/Alternates/Top-On - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/top-on.png",
+    "width": 600,
+    "height": 155,
+    "sha256": "c0cda439e94daa9a23d8ddc6378ab970f9e3044a7325cc395ccdd4f156ce3de9"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/A Button - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/a-button.png",
+    "width": 115,
+    "height": 188,
+    "sha256": "415ef477cf7fd32fc9c33cc76596365c82a60333407dc6167be0c86a9aefff92"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/B Button - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/b-button.png",
+    "width": 95,
+    "height": 188,
+    "sha256": "8779651612bbbf32e64896835bdebf4a42c61d2b7d117d47c9b5d12585031f6a"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Battery - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/battery.png",
+    "width": 110,
+    "height": 225,
+    "sha256": "82e1bddb830f4dd0476b0ed66fc8422fd1dc3273e3f9c6bb5d2ffaf679fb83c7"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Below Screen - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/below-screen.png",
+    "width": 600,
+    "height": 159,
+    "sha256": "43545da2863ed29f9fd327edd549055b9cc2d88d8ec7294cb90ff57de3a69a89"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Bottom - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/bottom.png",
+    "width": 520,
+    "height": 248,
+    "sha256": "ffb0cc5410696c62f89b158f42a67f7aa26b85e5a0d359924cf2c6b41a685614"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Contrast Wheel - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/contrast-wheel.png",
+    "width": 75,
+    "height": 225,
+    "sha256": "36054efb51550a75de4b2dd7e76dcec087b4f3ddf63c3c51866e338de1725e73"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/D-Pad - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/d-pad.png",
+    "width": 310,
+    "height": 188,
+    "sha256": "ccf623e646fbd070fc0def804ecff390c5549acaa52262b488e178ce5a1e2ae6"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Game Boy - 240x180.png",
+    "path": "docs/reference/game-boy/size-1.png",
+    "width": 600,
+    "height": 975,
+    "sha256": "a90f58ed574f6883f377929ad54a7dfbef0aebcad2f87938f73574fb860c43a6"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Left Side - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/left-side.png",
+    "width": 80,
+    "height": 436,
+    "sha256": "b44d2f07f4f86215e3f37e5c000404a497f4df347581448a3b27b5ee70176927"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Right of Screen - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/right-of-screen.png",
+    "width": 115,
+    "height": 225,
+    "sha256": "5f70d2d16b265f7eb4015bc8911ddea7afc72a4172653fb67a55236b372c54df"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Select Button - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/select-button.png",
+    "width": 216,
+    "height": 141,
+    "sha256": "a3d1a3a2efbea89db9935ce3da6504428703cf1b35e05173e77cb6841f387959"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Start Button - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/start-button.png",
+    "width": 110,
+    "height": 141,
+    "sha256": "98a0fd07ac23da73079c736f4614ae6e864e3caa31fbfafd0206ae64b1f396f2"
+  },
+  {
+    "source": "Game Boy Frame/240x180/PNGs/Top - 240x180.png",
+    "path": "assets/presentation/game-boy/size-1/top.png",
+    "width": 600,
+    "height": 155,
+    "sha256": "7e7858f6b090a0f1189866f7b6ea21ffde448979cfc4d7f55620df3d001891a4"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/A Button-Pressed.png",
+    "path": "assets/presentation/game-boy/size-2/a-button-pressed.png",
+    "width": 135,
+    "height": 188,
+    "sha256": "9397f3e567b875167aa777b89f133e1d8c1695779e3b1dda20e5f217f5cd90b4"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/B Button-Pressed.png",
+    "path": "assets/presentation/game-boy/size-2/b-button-pressed.png",
+    "width": 130,
+    "height": 188,
+    "sha256": "86e191fa6ad86ca705122750264a08becb37ee0852be5435ba10c3051efe61df"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/Battery-On.png",
+    "path": "assets/presentation/game-boy/size-2/battery-on.png",
+    "width": 110,
+    "height": 360,
+    "sha256": "ec5134380b3ba0622ab5642444e4f0b9132835b39f173b5087a6597388165a33"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/Contrast Wheel-Scroll.png",
+    "path": "assets/presentation/game-boy/size-2/contrast-wheel-scroll.png",
+    "width": 75,
+    "height": 360,
+    "sha256": "4d7520c0df799d95bd43da0d7ec207f8abaeaa02196c338a0d35e48d81ca135c"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/D-Pad-Down.png",
+    "path": "assets/presentation/game-boy/size-2/d-pad-down.png",
+    "width": 435,
+    "height": 188,
+    "sha256": "d2e2f83a87eb71e50435da199ceb7ce03f1cb5451286306fea38014eac47d4eb"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/D-Pad-Left.png",
+    "path": "assets/presentation/game-boy/size-2/d-pad-left.png",
+    "width": 435,
+    "height": 188,
+    "sha256": "7c4f8a830f5a393feb0fd5c805c2d91d535c9f460570a3282340e165a826ddea"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/D-Pad-Right.png",
+    "path": "assets/presentation/game-boy/size-2/d-pad-right.png",
+    "width": 435,
+    "height": 188,
+    "sha256": "28fb3adfb33c14d273fa36809e0790fb12cc6e75beba250e0eb9d4b54c2e91e8"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/D-Pad-Up.png",
+    "path": "assets/presentation/game-boy/size-2/d-pad-up.png",
+    "width": 435,
+    "height": 188,
+    "sha256": "f86c7ee605a105d02c2f62ceaecb8f7b3dd1c2288630de84242c5d1a726e22a5"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/Select Button-Pressed.png",
+    "path": "assets/presentation/game-boy/size-2/select-button-pressed.png",
+    "width": 296,
+    "height": 141,
+    "sha256": "3fa3dd39da9762bb63ba23c6e2fa9fb4ee384c225765caab2dcb2998bce196a0"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/Start Button-Pressed.png",
+    "path": "assets/presentation/game-boy/size-2/start-button-pressed.png",
+    "width": 210,
+    "height": 141,
+    "sha256": "7cb2ed675e30065fffb12e99aa9f35d2904ff4e7e32a48d7d72aec5c56d229f7"
+  },
+  {
+    "source": "Game Boy Frame/480x360/Alternates/Top-On.png",
+    "path": "assets/presentation/game-boy/size-2/top-on.png",
+    "width": 780,
+    "height": 155,
+    "sha256": "a866fdcf809c5c98277940996e7c51157a08cf69b631e9b23b409c0aa4bf7da4"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/A Button.png",
+    "path": "assets/presentation/game-boy/size-2/a-button.png",
+    "width": 135,
+    "height": 188,
+    "sha256": "05e3824bfd5fb41306d9ac442176a7a6c43203a9cb80585dc860d7bc9eb0a25c"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/B Button.png",
+    "path": "assets/presentation/game-boy/size-2/b-button.png",
+    "width": 130,
+    "height": 188,
+    "sha256": "15baa444f13bb0fec922bf99bf08cfe0ff23dbf936ffec9fd59af80cbdde9ff8"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Battery.png",
+    "path": "assets/presentation/game-boy/size-2/battery.png",
+    "width": 110,
+    "height": 360,
+    "sha256": "a574ff5f836385abce6f5a2f712c7970d0980177a8c73d1fe92db07947182b12"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Below Screen.png",
+    "path": "assets/presentation/game-boy/size-2/below-screen.png",
+    "width": 780,
+    "height": 154,
+    "sha256": "193a770808a6caaefa11cb6cd4d6cf1129cf367aceb9ad55be6731397750a4c5"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Bottom.png",
+    "path": "assets/presentation/game-boy/size-2/bottom.png",
+    "width": 700,
+    "height": 248,
+    "sha256": "5bbc962ee5fd8c53530f7bb125c04fa848c64a950211d47c8af8c40d3ace1a5c"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Contrast Wheel.png",
+    "path": "assets/presentation/game-boy/size-2/contrast-wheel.png",
+    "width": 75,
+    "height": 360,
+    "sha256": "909f1ef704b0c0c1433ad92801745aec0f2f1e522a98821b568f3f3eb0a3cd30"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/D-Pad.png",
+    "path": "assets/presentation/game-boy/size-2/d-pad.png",
+    "width": 435,
+    "height": 188,
+    "sha256": "210276c26b4897a23882ea28dea013100c74bb76a4d57ce264111a5cc95ad066"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Game Boy - 480x360.png",
+    "path": "docs/reference/game-boy/size-2.png",
+    "width": 780,
+    "height": 1105,
+    "sha256": "2f4f5c4b2e95c6916923e6522cfac8f4511fec1d59c8190aeb5fec47d87b01c8"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Left Side.png",
+    "path": "assets/presentation/game-boy/size-2/left-side.png",
+    "width": 80,
+    "height": 436,
+    "sha256": "b44d2f07f4f86215e3f37e5c000404a497f4df347581448a3b27b5ee70176927"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Right of Screen.png",
+    "path": "assets/presentation/game-boy/size-2/right-of-screen.png",
+    "width": 115,
+    "height": 360,
+    "sha256": "d1b2dfb423f478f60ca25796dc2c6fa10d32b6a2559ee207a3e52d6551c9f69c"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Select Button.png",
+    "path": "assets/presentation/game-boy/size-2/select-button.png",
+    "width": 296,
+    "height": 141,
+    "sha256": "553d6e518974120b0f379166015ead10f424f805e092ec5bd2f862d11917d7b6"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Start Button.png",
+    "path": "assets/presentation/game-boy/size-2/start-button.png",
+    "width": 210,
+    "height": 141,
+    "sha256": "08194cd37be3cc791929981fed235446d89ef0eafdab923eb2e814b2105d3483"
+  },
+  {
+    "source": "Game Boy Frame/480x360/PNGs/Top.png",
+    "path": "assets/presentation/game-boy/size-2/top.png",
+    "width": 780,
+    "height": 155,
+    "sha256": "fc5e6e726924f9cd0552718527bfac8efaf4befc2846d488f41aa317b1f8a4a3"
+  }
+]

@@ -1,6 +1,7 @@
 // Generated-page and DOM-fixture checks. This is not a browser/Explorer security test.
 const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'index.html'),'utf8');
+require('./shell-assets.cjs').inspect(root);
 function load(html){const c=vm.createContext({window:{},console});for(const m of html.matchAll(/<script src="([^"]+)"/g)){if(m[1]==='js/main.js')continue;assert(!/^(?:\w+:|\/\/)/.test(m[1]));vm.runInContext(fs.readFileSync(path.join(root,m[1]),'utf8'),c,{filename:m[1]});}return c;}
 function dom(html){const matches=[...html.matchAll(/<script type="application\/json" id="shining-farce-shipping-data">([\s\S]*?)<\/script>/g)];return{querySelectorAll:()=>matches.map(m=>({tagName:'SCRIPT',getAttribute:()=> 'application/json',hasAttribute:()=>false,textContent:m[1]})),documentElement:{outerHTML:html.replace(/^<!doctype html>\s*/i,'')}};}
 const c=load(source),run=text=>vm.runInContext(text,c);c.pageSource=source;

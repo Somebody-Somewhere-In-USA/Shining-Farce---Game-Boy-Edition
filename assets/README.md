@@ -1,8 +1,8 @@
 # Replaceable PNG assets
 
-Runtime paths are listed in js/data/assets.js. All opaque game pixels use the four authorized colors in js/config/palette.js; transparent pixels have alpha 0 and visible pixels alpha 255. No gradients, antialiasing or extra colors are permitted in the source framebuffer. The optional display palette maps the four source colors at game-canvas output; it does not recolor these files or relax PNG validation. Earlier alternate output values in `js/config/displayPalettes.js` remain provisional/tunable. Dark’s reversed grayscale mapping and the separate outer companion backgrounds are established owner values. Companion backgrounds do not authorize additional source PNG colors or a global palette filter. Future device-shell art is separate and not implemented.
+Core framebuffer runtime paths are listed in js/data/assets.js. All opaque game pixels use the four authorized colors in js/config/palette.js; transparent pixels have alpha 0 and visible pixels alpha 255. No gradients, antialiasing or extra colors are permitted in the source framebuffer. The optional display palette maps the four source colors at game-canvas output; it does not recolor these files or relax PNG validation. Earlier alternate output values in `js/config/displayPalettes.js` remain provisional/tunable. Dark’s reversed grayscale mapping and the separate outer companion backgrounds are established owner values. Companion backgrounds do not authorize additional source PNG colors or a global palette filter. The fixed Game Boy shell art described below is separate and remains outside the framebuffer palette transform.
 
-The game loads **22 PNGs**, ready to use without generation or build steps.
+The core manifest loads **22 PNGs**, ready to use without generation or build steps. A separate fixed presentation manifest preloads 46 shell component PNGs.
 
 | Asset under assets/ | Size | Contract |
 | --- | --- | --- |
@@ -37,6 +37,12 @@ Older 8px/Prompt #1 PNGs remain historical and are not loaded. tools/generate-pl
 
 Prompt #8 regenerated existing palette-driven placeholder assets and added Ocean. That pass covered 31 PNGs. The subsequent Stage-1 acceptance correction pass validates all 37 currently present PNGs, including six user-added production frames and historical unused assets, with no forbidden colors or partial alpha. Run `node tools/verify-palette.cjs PATH_TO_EXISTING_CANVAS_PACKAGE` for exhaustive asset and runtime color-constant checks.
 
+
+## Fixed Game Boy presentation resources
+
+`js/config/presentationShell.js` lists every normal/alternate component, native dimensions and layer coordinates under `assets/presentation/game-boy/size-1/` and `size-2/`. These 46 PNGs originate from the owner's ZIP; the owner subsequently revised small `select-button-pressed.png` manually, recorded separately in `docs/reference/game-boy/owner-revisions.json`. This mode extension changes no PNG artwork. No `.aseprite` files are required or copied. They are independent of the Battle Scene catalog, EditorDocument and inert shipping JSON. Distribute them with the whole project; no updater is needed. Complete reference PNGs and SHA-256/source-path provenance live in `docs/reference/game-boy/` for development only.
+
+Only these exact manifest paths are excluded from canonical framebuffer-color validation; additional PNGs do not acquire that exemption. Dimension/path checks still validate every shell file. `node tools/verify-presentation-shell.cjs PATH_TO_EXISTING_CANVAS_PACKAGE` checks hashes, native composition and reference differences. Shell asset IDs remain small (1) and large (2), independently of the five presentation-mode IDs. The small opening stays 300×225; new Mode 1 displays 240×180 inset, while Modes 2/3 fill it at 300×225. Historical ZIP names do not set logical game resolution. See the [implementation report](../docs/GAME-BOY-PRESENTATION-SHELL.md) for all component paths and the supplied small-reference discrepancy.
 
 ## Battle Scene production assets (Stage 1)
 
